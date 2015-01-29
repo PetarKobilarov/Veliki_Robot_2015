@@ -51,11 +51,15 @@ Allocating common symbols
 Common symbol       size              file
 
 backwardLeftSensor  0x1               main.o
+greenSideCallbackFunctionsArray
+                    0x2               greenSide.o
 forwardRightSensor  0x1               main.o
 __brkval            0x2               c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libc.a(malloc.o)
 forwardLeftSensor   0x1               main.o
 backwardRightSensor
                     0x1               main.o
+yellowSideCallbackFunctionsArray
+                    0x2               yellowSide.o
 __flp               0x2               c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libc.a(malloc.o)
 
 Discarded input sections
@@ -88,6 +92,7 @@ Discarded input sections
                 0x00000000        0x0 greenSide.o
  .text.greenSide
                 0x00000000        0x0 greenSide.o
+ COMMON         0x00000000        0x0 greenSide.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
@@ -154,6 +159,7 @@ Discarded input sections
                 0x00000000        0x0 yellowSide.o
  .text.yellowSide
                 0x00000000        0x0 yellowSide.o
+ COMMON         0x00000000        0x0 yellowSide.o
  .text          0x00000000        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a(addsf3.o)

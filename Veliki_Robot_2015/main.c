@@ -5,6 +5,8 @@
 #include "system.h"
 #include "odometry.h"
 #include "can.h"
+#include "usart.h"
+
 unsigned char forwardLeftSensor, backwardLeftSensor, forwardRightSensor, backwardRightSensor;
 void mars(void)
 {
@@ -15,6 +17,7 @@ void mars(void)
 		while(1);
 	}
 }
+
 
 const position positions[3] = 
 {
@@ -34,7 +37,6 @@ int main(void)
 	start.x = 0;
 	start.y = 0;
 	start.angle = 0;
-	
 	
     CAN_Init(4);
 

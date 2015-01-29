@@ -5,9 +5,13 @@
 #include "odometry.h"
 #include "can.h"
 #include "sides.h"
+#include "usart.h"
 
 #define yellowSideRegularPositionCount		1
 #define yellowSideAlternativePositionCount	1
+
+typedef void (*yellowSideCallbackFunction)(void);
+yellowSideCallbackFunction yellowSideCallbackFunctionsArray[yellowSideRegularPositionCount];
 
 /*************************************************************************************************************************************************************************************
 														Pozicije na zutoj strani u slucaju kada nije detektovan protivnik.
@@ -53,11 +57,19 @@ void yellowSide(void)
 	position startingPosition;
 	unsigned char currentPosition = 0, nextPosition = 0;
 	Movementstates	state = REGULAR;
+	int callbackNum = 0;
 	
 	startingPosition.x = 0;
 	startingPosition.y = 0;
 	startingPosition.angle = 0;
 	setPosition(startingPosition);
+	
+	for(callbackNum; callbackNum < yellowSideRegularPositionCount; callbackNum++)
+	{
+		yellowSideCallbackFunctionsArray[callbackNum] = calloc(yellowSideRegularPositionCount, sizeof(callbackFunction()));
+	}
+	
+	yellowSideCallbackFunctionsArray[0] = NULL;
 	
 	while (1)
 	{
@@ -65,17 +77,11 @@ void yellowSide(void)
 		{
 			switch(state)
 			{
-				default:
-					switch(currentPosition)
-					{
-						case 0:	
-							gotoXY(yellowSideRegularPositions[0], yellowSideRegularSpeed[0], yellowSideRegularDirection[0], NULL);
-								break;
-					
-					}//end switch position
+				default:	
+					gotoXY(yellowSideRegularPositions[currentPosition], yellowSideRegularSpeed[currentPosition], yellowSideRegularDirection[currentPosition], yellowSideCallbackFunctionsArray[currentPosition]);
 						break;
 						
-					case ALTERNATIVE:
+				case ALTERNATIVE:
 						break;
 			}//end switch states
 		}//end for
