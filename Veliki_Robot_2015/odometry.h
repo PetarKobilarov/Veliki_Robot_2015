@@ -8,6 +8,13 @@
 #define ODOMETRY_FAIL		1
 #define ODOMETRY_STUCK		2
 
+#define LOW_SPEED			50
+#define NORMAL_SPEED		150
+#define HIGH_SPEED			220
+
+#define FORWARD				 1
+#define BACKWARD			-1
+
 typedef struct
 {
 	signed int x;

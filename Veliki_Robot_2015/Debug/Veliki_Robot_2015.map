@@ -71,6 +71,23 @@ Discarded input sections
  .text          0x00000000        0x0 fuse.o
  .data          0x00000000        0x0 fuse.o
  .bss           0x00000000        0x0 fuse.o
+ .text          0x00000000        0x0 greenSide.o
+ .data          0x00000000        0x0 greenSide.o
+ .bss           0x00000000        0x0 greenSide.o
+ .rodata.greenSideRegularPositions
+                0x00000000        0x0 greenSide.o
+ .rodata.greenSideRegularSpeed
+                0x00000000        0x0 greenSide.o
+ .rodata.greenSideRegularDirection
+                0x00000000        0x0 greenSide.o
+ .rodata.greenSideAlternativePositions
+                0x00000000        0x0 greenSide.o
+ .rodata.greenSideAlternativeSpeed
+                0x00000000        0x0 greenSide.o
+ .rodata.greenSideAlternativeDirection
+                0x00000000        0x0 greenSide.o
+ .text.greenSide
+                0x00000000        0x0 greenSide.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
@@ -93,6 +110,23 @@ Discarded input sections
  .bss           0x00000000        0x0 system.o
  .text.GPIO_PinRead
                 0x00000000        0x0 system.o
+ .text          0x00000000        0x0 yellowSide.o
+ .data          0x00000000        0x0 yellowSide.o
+ .bss           0x00000000        0x0 yellowSide.o
+ .rodata.yellowSideRegularPositions
+                0x00000000        0x0 yellowSide.o
+ .rodata.yellowSideRegularSpeed
+                0x00000000        0x0 yellowSide.o
+ .rodata.yellowSideRegularDirection
+                0x00000000        0x0 yellowSide.o
+ .rodata.yellowSideAlternativePositions
+                0x00000000        0x0 yellowSide.o
+ .rodata.yellowSideAlternativeSpeed
+                0x00000000        0x0 yellowSide.o
+ .rodata.yellowSideAlternativeDirection
+                0x00000000        0x0 yellowSide.o
+ .text.yellowSide
+                0x00000000        0x0 yellowSide.o
  .text          0x00000000        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a(addsf3.o)
@@ -181,9 +215,11 @@ Address of section .data set to 0x800100
 LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51/crtcan128.o
 LOAD can.o
 LOAD fuse.o
+LOAD greenSide.o
 LOAD main.o
 LOAD odometry.o
 LOAD system.o
+LOAD yellowSide.o
 START GROUP
 LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a
 END GROUP

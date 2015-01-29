@@ -38,9 +38,11 @@ SUBDIRS :=
 C_SRCS +=  \
 ../can.c \
 ../fuse.c \
+../greenSide.c \
 ../main.c \
 ../odometry.c \
-../system.c
+../system.c \
+../yellowSide.c
 
 
 PREPROCESSING_SRCS += 
@@ -52,30 +54,38 @@ ASM_SRCS +=
 OBJS +=  \
 can.o \
 fuse.o \
+greenSide.o \
 main.o \
 odometry.o \
-system.o
+system.o \
+yellowSide.o
 
 OBJS_AS_ARGS +=  \
 can.o \
 fuse.o \
+greenSide.o \
 main.o \
 odometry.o \
-system.o
+system.o \
+yellowSide.o
 
 C_DEPS +=  \
 can.d \
 fuse.d \
+greenSide.d \
 main.d \
 odometry.d \
-system.d
+system.d \
+yellowSide.d
 
 C_DEPS_AS_ARGS +=  \
 can.d \
 fuse.d \
+greenSide.d \
 main.d \
 odometry.d \
-system.d
+system.d \
+yellowSide.d
 
 OUTPUT_FILE_PATH +=Veliki_Robot_2015.elf
 
@@ -88,6 +98,10 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 
