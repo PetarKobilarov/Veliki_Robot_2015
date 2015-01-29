@@ -42,6 +42,7 @@ C_SRCS +=  \
 ../main.c \
 ../odometry.c \
 ../system.c \
+../usart.c \
 ../yellowSide.c
 
 
@@ -58,6 +59,7 @@ greenSide.o \
 main.o \
 odometry.o \
 system.o \
+usart.o \
 yellowSide.o
 
 OBJS_AS_ARGS +=  \
@@ -67,6 +69,7 @@ greenSide.o \
 main.o \
 odometry.o \
 system.o \
+usart.o \
 yellowSide.o
 
 C_DEPS +=  \
@@ -76,6 +79,7 @@ greenSide.d \
 main.d \
 odometry.d \
 system.d \
+usart.d \
 yellowSide.d
 
 C_DEPS_AS_ARGS +=  \
@@ -85,6 +89,7 @@ greenSide.d \
 main.d \
 odometry.d \
 system.d \
+usart.d \
 yellowSide.d
 
 OUTPUT_FILE_PATH +=Veliki_Robot_2015.elf
@@ -98,6 +103,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
