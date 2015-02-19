@@ -6,16 +6,14 @@
 #include "can.h"
 #include "sides.h"
 #include "usart.h"
+#include "common.h"
 
-#define greenSideRegularPositionCount		1
-#define greenSideAlternativePositionCount	1
-
+//#define greenSideAlternativePositionCount	1
+/*
 typedef void (*greenSideCallbackFunction)(void);
 greenSideCallbackFunction greenSideCallbackFunctionsArray[greenSideRegularPositionCount];
 
-/*************************************************************************************************************************************************************************************
-														Pozicije na zelenoj strani u slucaju kada nije detektovan protivnik.
-*************************************************************************************************************************************************************************************/
+
 const position greenSideRegularPositions[greenSideRegularPositionCount] =
 {
 	{0, 0, 0}
@@ -31,9 +29,7 @@ const signed char greenSideRegularDirection[greenSideRegularPositionCount] =
 	FORWARD	
 };
 
-/*************************************************************************************************************************************************************************************
-														Pozicije na zelenoj strani u slucaju da je detektovan protivnik.
-*************************************************************************************************************************************************************************************/
+
 const position greenSideAlternativePositions[greenSideAlternativePositionCount] =
 {
 	{0, 0, 0}
@@ -48,42 +44,85 @@ const signed char greenSideAlternativeDirection[greenSideAlternativePositionCoun
 {
 	FORWARD
 };
+*/
 
-/*************************************************************************************************************************************************************************************
-																				ZELENA STRANA
-*************************************************************************************************************************************************************************************/
+char fuckItOne(void)
+{
+	if(GPIO_PinRead(backwardLeftSensor) == 1 || GPIO_PinRead(forwardRightSensor) == 1 || GPIO_PinRead(forwardLeftSensor) == 1)
+	{
+		PORTG = 0x01;	
+	}
+	
+	return 0;
+}
+
+char fuckItTwo(void)
+{
+	if(GPIO_PinRead(backwardLeftSensor) == 1 || GPIO_PinRead(forwardRightSensor) == 1 || GPIO_PinRead(forwardLeftSensor) == 1)
+	{
+		PORTG = 0x03;
+		stop(HARD_STOP);
+		
+		while(GPIO_PinRead(backwardLeftSensor) == 1 || GPIO_PinRead(forwardRightSensor) == 1 || GPIO_PinRead(forwardLeftSensor) == 1);
+		_delay_ms(100);
+		
+		return 2;
+	}
+	
+	return 0;
+}
+
+const gotoCrap tacticOnePositions[TACTIC_ONE_POSITION_COUNT] = 
+{
+	{{500, 500, 0}, LOW_SPEED, FORWARD, fuckItOne},
+	{{0, 500, 0}, LOW_SPEED, BACKWARD, fuckItTwo}
+};
+
 void greenSide(void)
 {
+	
 	position startingPosition;
-	unsigned char currentPosition = 0, nextPosition = 0;
-	Movementstates	state = REGULAR;
-	int callbackNum = 0;
+	unsigned char currentPosition = 0, nextPosition = 0, odometryStatus;
+	unsigned char activeState = TACTIC_ONE;
 	
 	startingPosition.x = 0;
-	startingPosition.y = 0;
+	startingPosition.y = 500;
 	startingPosition.angle = 0;
 	setPosition(startingPosition);
 	
-	for(callbackNum; callbackNum < greenSideRegularPositionCount; callbackNum++)
-	{
-		greenSideCallbackFunctionsArray[callbackNum] = calloc(greenSideRegularPositionCount, sizeof(callbackFunction()));
-	}
-	
-	greenSideCallbackFunctionsArray[0] = NULL;
-	
 	while (1)
 	{
-		for (currentPosition = nextPosition; currentPosition < greenSideRegularPositionCount; currentPosition++)
+		_delay_ms(50);
+		PORTG = 0;
+		switch(activeState)
 		{
-			switch(state)
-			{
-				default:
-					gotoXY(greenSideRegularPositions[currentPosition], greenSideRegularSpeed[currentPosition], greenSideRegularDirection[currentPosition], greenSideCallbackFunctionsArray[currentPosition]);
-						break;
+			case TACTIC_ONE:
+				for (currentPosition = nextPosition; currentPosition < TACTIC_ONE_POSITION_COUNT; currentPosition++)
+				{
+					// mozda ubaciti if-else sa akcijama tipa regularno- kretanje, i alternativno- sta god
+					odometryStatus = gotoXY(tacticOnePositions[currentPosition].point, tacticOnePositions[currentPosition].speed, 
+						   tacticOnePositions[currentPosition].direction, tacticOnePositions[currentPosition].detectionCallback);
+						   
+					if(odometryStatus == ODOMETRY_FAIL) // fail
+					{
+						PORTG = 0xFF;
+						_delay_ms(5000);
+					}
+					else if(odometryStatus == ODOMETRY_STUCK)
+					{
+						
+					}
 					
-				case ALTERNATIVE:
-						break;
-			}//end switch states
-		}//end for
+					if(currentPosition == 0)
+					{
+						
+					}
+					else if(currentPosition == 1)
+					{
+						
+					}
+				}//end for
+				break;
+		}
 	}//end while(1)
 }

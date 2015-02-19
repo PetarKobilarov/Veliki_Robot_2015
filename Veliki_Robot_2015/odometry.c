@@ -30,9 +30,9 @@ char stop(char type)
 	}
 }
 
-char moveOnDirection(int distance, unsigned char speed, void (*callback)(void))
+char moveOnDirection(int distance, unsigned char speed, char (*callback)(void))
 {
-	unsigned char buffer[8];
+	unsigned char buffer[8], callbackValue;
 	
 	buffer[0] = 'V';
 	buffer[1] = speed;
@@ -43,7 +43,7 @@ char moveOnDirection(int distance, unsigned char speed, void (*callback)(void))
 	buffer[1] = distance >> 8;
 	buffer[2] = distance & 0XFF;
 	while(CAN_Write(buffer, DRIVER_TX_IDENTIFICATOR))
-		_delay_ms(50);;
+		_delay_ms(50);
 	
 	while (1)
 	{
@@ -61,13 +61,26 @@ char moveOnDirection(int distance, unsigned char speed, void (*callback)(void))
 			
 		_delay_ms(50);
 		if(callback != NULL)
-			callback();
+		{
+			callbackValue = callback();
+			
+			if(callbackValue == 1)
+				return ODOMETRY_FAIL;
+			if(callbackValue == 2)
+			{
+				buffer[0] = 'D';
+				buffer[1] = distance >> 8;
+				buffer[2] = distance & 0XFF;
+				while(CAN_Write(buffer, DRIVER_TX_IDENTIFICATOR))
+				_delay_ms(50);
+			}
+		}
 	}
 }
 
-char gotoXY(position coordinates, unsigned char speed, signed char direction, void (*callback)(void))
+char gotoXY(position coordinates, unsigned char speed, signed char direction, char (*callback)(void))
 {
-	unsigned char buffer[8];
+	unsigned char buffer[8], callbackValue;
 	
 	buffer[0] = 'V';
 	buffer[1] = speed;
@@ -100,7 +113,24 @@ char gotoXY(position coordinates, unsigned char speed, signed char direction, vo
 		
 		_delay_ms(50);
 		if(callback != NULL)
-			callback();
+		{
+			callbackValue = callback();
+			
+			if(callbackValue == 1)
+				return ODOMETRY_FAIL;
+			if(callbackValue == 2)
+			{
+				buffer[0] = 'G';
+				buffer[1] = coordinates.x >> 8;
+				buffer[2] = coordinates.x & 0XFF;
+				buffer[3] = coordinates.y >> 8;
+				buffer[4] = coordinates.y & 0XFF;
+				buffer[5] = 0;//Mozda ne treba 0
+				buffer[6] = direction;
+				while(CAN_Write(buffer, DRIVER_TX_IDENTIFICATOR))
+				_delay_ms(50);
+			}
+		}
 	}
 }
 
@@ -136,9 +166,9 @@ char setPosition(position coordinates)
 	}
 }
 
-char rotate(int angle,unsigned char speed, void (*callback)(void))
+char rotate(int angle,unsigned char speed, char (*callback)(void))
 {
-	unsigned char buffer[8];
+	unsigned char buffer[8], callbackValue;
 	
 	buffer[0] = 'V';
 	buffer[1] = speed;
@@ -168,13 +198,26 @@ char rotate(int angle,unsigned char speed, void (*callback)(void))
 		
 		_delay_ms(50);
 		if(callback != NULL)
-			callback();
+		{
+			callbackValue = callback();
+			if(callbackValue == 1)
+				return ODOMETRY_FAIL;
+			if(callbackValue == 2)
+			{
+				buffer[0] = 'T';
+				buffer[1] = angle >> 8;
+				buffer[2] = angle & 0XFF;
+				
+				while(CAN_Write(buffer, DRIVER_TX_IDENTIFICATOR))
+				_delay_ms(50);
+			}
+		}
 	}
 }
 
-char setAngle(int angle, unsigned char speed, void (*callback)(void))
+char setAngle(int angle, unsigned char speed, char (*callback)(void))
 {
-	unsigned char buffer[8];
+	unsigned char buffer[8], callbackValue;
 	
 	buffer[0] = 'V';
 	buffer[1] = speed;
@@ -203,7 +246,20 @@ char setAngle(int angle, unsigned char speed, void (*callback)(void))
 		
 		_delay_ms(50);
 		if(callback != NULL)
-			callback();
+		{
+			callbackValue = callback();
+			if(callbackValue == 1)
+				return ODOMETRY_FAIL;
+			if(callbackValue == 2)
+			{
+				buffer[0] = 'A';
+				buffer[1] = angle >> 8;
+				buffer[2] = angle & 0XFF;
+				
+				while(CAN_Write(buffer, DRIVER_TX_IDENTIFICATOR))
+				_delay_ms(50);
+			}
+		}
 	}
 }
 

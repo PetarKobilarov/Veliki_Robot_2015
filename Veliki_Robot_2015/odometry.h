@@ -32,11 +32,11 @@ typedef enum
 }states;
 
 char stop(char type);
-char moveOnDirection(int distance, unsigned char speed, void (*callback)(void));
-char gotoXY(position coordinates, unsigned char speed, signed char direction, void (*callback)(void));
+char moveOnDirection(int distance, unsigned char speed, char (*callback)(void));
+char gotoXY(position coordinates, unsigned char speed, signed char direction, char (*callback)(void));
 char setPosition(position coordinates);
-char rotate(int angle,unsigned char speed, void (*callback)(void));
-char setAngle(int angle, unsigned char speed, void (*callback)(void));
+char rotate(int angle,unsigned char speed, char (*callback)(void));
+char setAngle(int angle, unsigned char speed, char (*callback)(void));
 char getState(void);
 position getPosition(void);
 
