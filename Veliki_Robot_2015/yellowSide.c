@@ -7,47 +7,16 @@
 #include "sides.h"
 #include "usart.h"
 
-#define yellowSideRegularPositionCount		1
-#define yellowSideAlternativePositionCount	1
-
-typedef void (*yellowSideCallbackFunction)(void);
-yellowSideCallbackFunction yellowSideCallbackFunctionsArray[yellowSideRegularPositionCount];
-
 /*************************************************************************************************************************************************************************************
-														Pozicije na zutoj strani u slucaju kada nije detektovan protivnik.
+																POZICIJE,BRZINE,SMEROVI I DETEKCIJE ZA ZUTU STRANU
 *************************************************************************************************************************************************************************************/
-const position yellowSideRegularPositions[yellowSideRegularPositionCount] =
+const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
-	{0, 0, 0}
+	{{500, 500, 0}, LOW_SPEED, FORWARD, NULL}
 };
 
-const unsigned char yellowSideRegularSpeed[yellowSideRegularPositionCount] =
-{
-	LOW_SPEED	
-};
 
-const signed char yellowSideRegularDirection[yellowSideRegularPositionCount] =
-{
-	FORWARD	
-};
 
-/*************************************************************************************************************************************************************************************
-														Pozicije na zutoj strani u slucaju da je detektovan protivnik.
-*************************************************************************************************************************************************************************************/
-const position yellowSideAlternativePositions[yellowSideAlternativePositionCount] =
-{
-	{0, 0, 0}
-};
-
-const unsigned char yellowSideAlternativeSpeed[yellowSideAlternativePositionCount] =
-{
-	LOW_SPEED
-};
-
-const signed char yellowSideAlternativeDirection[yellowSideAlternativePositionCount] =
-{
-	FORWARD
-};
 
 /*************************************************************************************************************************************************************************************
 																				ZUTA STRANA
@@ -55,35 +24,45 @@ const signed char yellowSideAlternativeDirection[yellowSideAlternativePositionCo
 void yellowSide(void)
 {
 	position startingPosition;
-	unsigned char currentPosition = 0, nextPosition = 0;
-	Movementstates	state = REGULAR;
-	int callbackNum = 0;
+	unsigned char currentPosition = 0, nextPosition = 0, odometryStatus;
+	unsigned char activeState = TACTIC_ONE;
 	
 	startingPosition.x = 0;
 	startingPosition.y = 0;
 	startingPosition.angle = 0;
 	setPosition(startingPosition);
 	
-	for(callbackNum; callbackNum < yellowSideRegularPositionCount; callbackNum++)
-	{
-		yellowSideCallbackFunctionsArray[callbackNum] = calloc(yellowSideRegularPositionCount, sizeof(callbackFunction()));
-	}
-	
-	yellowSideCallbackFunctionsArray[0] = NULL;
-	
 	while (1)
 	{
-		for (currentPosition = nextPosition; currentPosition < yellowSideRegularPositionCount; currentPosition++)
+		switch(activeState)
 		{
-			switch(state)
+			case TACTIC_ONE:
+			for (currentPosition = nextPosition; currentPosition < TACTIC_ONE_POSITION_COUNT; currentPosition++)
 			{
-				default:	
-					gotoXY(yellowSideRegularPositions[currentPosition], yellowSideRegularSpeed[currentPosition], yellowSideRegularDirection[currentPosition], yellowSideCallbackFunctionsArray[currentPosition]);
-						break;
-						
-				case ALTERNATIVE:
-						break;
-			}//end switch states
-		}//end for
+				// mozda ubaciti if-else sa akcijama tipa regularno- kretanje, i alternativno- sta god
+				odometryStatus = gotoXY(yellowSideTacticOnePositions[currentPosition].point, yellowSideTacticOnePositions[currentPosition].speed,
+				yellowSideTacticOnePositions[currentPosition].direction, yellowSideTacticOnePositions[currentPosition].detectionCallback);
+				
+				if(odometryStatus == ODOMETRY_FAIL)
+				{
+
+				}
+				else if(odometryStatus == ODOMETRY_STUCK)
+				{
+					
+				}
+				
+				if(currentPosition == 0)
+				{
+					
+				}
+				else if(currentPosition == 1)
+				{
+					
+				}
+			}//end for
+			break;
+		}
 	}//end while(1)
+	
 }

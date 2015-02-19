@@ -50,16 +50,12 @@ c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libc.a(mem
 Allocating common symbols
 Common symbol       size              file
 
-backwardLeftSensor  0x1               main.o
-greenSideCallbackFunctionsArray
-                    0x2               greenSide.o
-forwardRightSensor  0x1               main.o
+backwardLeftSensor  0x1               greenSide.o
+forwardRightSensor  0x1               greenSide.o
 __brkval            0x2               c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libc.a(malloc.o)
-forwardLeftSensor   0x1               main.o
+forwardLeftSensor   0x1               greenSide.o
 backwardRightSensor
-                    0x1               main.o
-yellowSideCallbackFunctionsArray
-                    0x2               yellowSide.o
+                    0x1               greenSide.o
 __flp               0x2               c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libc.a(malloc.o)
 
 Discarded input sections
@@ -78,21 +74,10 @@ Discarded input sections
  .text          0x00000000        0x0 greenSide.o
  .data          0x00000000        0x0 greenSide.o
  .bss           0x00000000        0x0 greenSide.o
- .rodata.greenSideRegularPositions
-                0x00000000        0x0 greenSide.o
- .rodata.greenSideRegularSpeed
-                0x00000000        0x0 greenSide.o
- .rodata.greenSideRegularDirection
-                0x00000000        0x0 greenSide.o
- .rodata.greenSideAlternativePositions
-                0x00000000        0x0 greenSide.o
- .rodata.greenSideAlternativeSpeed
-                0x00000000        0x0 greenSide.o
- .rodata.greenSideAlternativeDirection
+ .rodata.greenSideTacticOnePositions
                 0x00000000        0x0 greenSide.o
  .text.greenSide
                 0x00000000        0x0 greenSide.o
- COMMON         0x00000000        0x0 greenSide.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
@@ -145,21 +130,10 @@ Discarded input sections
  .text          0x00000000        0x0 yellowSide.o
  .data          0x00000000        0x0 yellowSide.o
  .bss           0x00000000        0x0 yellowSide.o
- .rodata.yellowSideRegularPositions
-                0x00000000        0x0 yellowSide.o
- .rodata.yellowSideRegularSpeed
-                0x00000000        0x0 yellowSide.o
- .rodata.yellowSideRegularDirection
-                0x00000000        0x0 yellowSide.o
- .rodata.yellowSideAlternativePositions
-                0x00000000        0x0 yellowSide.o
- .rodata.yellowSideAlternativeSpeed
-                0x00000000        0x0 yellowSide.o
- .rodata.yellowSideAlternativeDirection
+ .rodata.yellowSideTacticOnePositions
                 0x00000000        0x0 yellowSide.o
  .text.yellowSide
                 0x00000000        0x0 yellowSide.o
- COMMON         0x00000000        0x0 yellowSide.o
  .text          0x00000000        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr51\libm.a(addsf3.o)
@@ -651,7 +625,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr51\libgcc.a
  .bss.rx1_buffer
                 0x00800228       0x40 usart.o
  *(COMMON)
- COMMON         0x00800268        0x4 main.o
+ COMMON         0x00800268        0x4 greenSide.o
                 0x00800268                backwardLeftSensor
                 0x00800269                forwardRightSensor
                 0x0080026a                forwardLeftSensor
