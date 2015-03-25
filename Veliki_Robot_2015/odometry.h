@@ -1,19 +1,20 @@
 #ifndef ODOMETRY_H_
 #define ODOMETRY_H_
 
-#define HARD_STOP	0
-#define SOFT_STOP	1
+#define HARD_STOP					'S'
+#define SOFT_STOP					's'
 
-#define ODOMETRY_SUCCESS	0
-#define ODOMETRY_FAIL		1
-#define ODOMETRY_STUCK		2
+#define ODOMETRY_SUCCESS			0
+#define ODOMETRY_FAIL				1
+#define ODOMETRY_STUCK				2
+#define ODOMETRY_CALLBACK_RETURN	3
 
-#define LOW_SPEED			50
-#define NORMAL_SPEED		150
-#define HIGH_SPEED			220
+#define LOW_SPEED					50
+#define NORMAL_SPEED				150
+#define HIGH_SPEED					220
 
-#define FORWARD				 1
-#define BACKWARD			-1
+#define FORWARD						1
+#define BACKWARD					-1
 
 typedef struct
 {
@@ -31,12 +32,17 @@ typedef enum
 	ERROR = 'E'
 }states;
 
+
+// callback za odometriju vraca sledece vrednosti:
+// 0- nista se ne desava, ostani u odometrijskoj funkciji 
+// 1- zelis da ispadnes iz funkcije, stop se realizuje ili u callbacku ili posle ispada, vraca ODOMETRY_FAIL
+// 2- zelis da ispadnes iz funkcije, stop se realizuje kako hoces, vraca ODOMETRY_CALLBACK_RETURN
 char stop(char type);
-char moveOnDirection(int distance, unsigned char speed, void (*callback)(void));
-char gotoXY(position coordinates, unsigned char speed, signed char direction, void (*callback)(void));
+char moveOnDirection(int distance, unsigned char speed, char (*callback)(void));
+char gotoXY(position coordinates, unsigned char speed, signed char direction, char (*callback)(void));
 char setPosition(position coordinates);
-char rotate(int angle,unsigned char speed, void (*callback)(void));
-char setAngle(int angle, unsigned char speed, void (*callback)(void));
+char rotate(int angle,unsigned char speed, char (*callback)(void));
+char setAngle(int angle, unsigned char speed, char (*callback)(void));
 char getState(void);
 position getPosition(void);
 

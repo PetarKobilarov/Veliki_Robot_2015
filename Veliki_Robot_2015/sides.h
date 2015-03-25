@@ -1,4 +1,4 @@
-#define TACTIC_ONE_POSITION_COUNT	1
+#define TACTIC_ONE_POSITION_COUNT	2
 
 typedef enum
 {
@@ -13,8 +13,6 @@ typedef struct
 	signed char direction;
 	char (*detectionCallback)(void);
 }gotoFields;
-
-unsigned char forwardLeftSensor, backwardLeftSensor, forwardRightSensor, backwardRightSensor;
 
 void yellowSide(void);
 void greenSide(void);

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 
 #define _MMIO_BYTE(mem_addr) (*(volatile uint8_t *)(mem_addr))
 
@@ -84,4 +85,17 @@ ISR(TIMER1_COMPA_vect)
     #if USE_TIMER_HOOK == 1
     Timer_Hook();
     #endif // USE_TIMER_HOOK
+}
+
+void systemInit(void)
+{
+	Timer_Init(1000);
+	DDRG = 0xFF;
+	CAN_Init(4);
+	
+	forwardLeftSensor = GPIO_PinRegister(GPIOE_BASE, 4); // backwardRight je u stvari
+	forwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 6); // taster nazad 
+	backwardLeftSensor = GPIO_PinRegister(GPIOA_BASE, 7); // taster napred
+	
+	_delay_ms(1000);
 }

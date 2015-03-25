@@ -7,12 +7,27 @@
 #include "sides.h"
 #include "usart.h"
 
+char detectionCallback(void)
+{
+	if(GPIO_PinRead(backwardLeftSensor) == 1 || GPIO_PinRead(forwardRightSensor) == 1)
+	{
+		stop(SOFT_STOP);
+		PORTG = 0xFF;
+		return 1;
+	}
+
+	PORTG = 0;
+	
+	return 0;
+}
+
 /*************************************************************************************************************************************************************************************
 																POZICIJE,BRZINE,SMEROVI I DETEKCIJE ZA ZELENU STRANU
 *************************************************************************************************************************************************************************************/
 const gotoFields greenSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
-	{{500, 500, 0}, LOW_SPEED, FORWARD, NULL}
+	{{500, 500, 0}, LOW_SPEED, FORWARD, NULL},
+	{{1200, 500, 0}, LOW_SPEED, FORWARD, detectionCallback}
 };
 
 
@@ -41,7 +56,7 @@ void greenSide(void)
 			{
 				// mozda ubaciti if-else sa akcijama tipa regularno- kretanje, i alternativno- sta god
 				odometryStatus = gotoXY(greenSideTacticOnePositions[currentPosition].point, greenSideTacticOnePositions[currentPosition].speed,
-				greenSideTacticOnePositions[currentPosition].direction, greenSideTacticOnePositions[currentPosition].detectionCallback);
+										greenSideTacticOnePositions[currentPosition].direction, greenSideTacticOnePositions[currentPosition].detectionCallback);
 				
 				if(odometryStatus == ODOMETRY_FAIL)
 				{
@@ -58,7 +73,11 @@ void greenSide(void)
 				}
 				else if(currentPosition == 1)
 				{
-					
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback() != 0)
+						_delay_ms(100);
+										
+					currentPosition--;
+					while(1);
 				}
 			}//end for
 			break;

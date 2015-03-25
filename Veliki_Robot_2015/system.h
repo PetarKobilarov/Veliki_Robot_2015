@@ -17,4 +17,7 @@ unsigned char GPIO_ReadFromRegister(unsigned char pinHandler);
 void fillDebaunsingData(void);
 
 void Timer_Init(unsigned int freq);
+
+unsigned char forwardLeftSensor, backwardLeftSensor, forwardRightSensor, backwardRightSensor;
+void systemInit(void);
 #endif
