@@ -36,6 +36,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../actuators.c \
 ../can.c \
 ../fuse.c \
 ../greenSide.c \
@@ -53,6 +54,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+actuators.o \
 can.o \
 fuse.o \
 greenSide.o \
@@ -63,6 +65,7 @@ usart.o \
 yellowSide.o
 
 OBJS_AS_ARGS +=  \
+actuators.o \
 can.o \
 fuse.o \
 greenSide.o \
@@ -73,6 +76,7 @@ usart.o \
 yellowSide.o
 
 C_DEPS +=  \
+actuators.d \
 can.d \
 fuse.d \
 greenSide.d \
@@ -83,6 +87,7 @@ usart.d \
 yellowSide.d
 
 C_DEPS_AS_ARGS +=  \
+actuators.d \
 can.d \
 fuse.d \
 greenSide.d \
@@ -103,6 +108,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

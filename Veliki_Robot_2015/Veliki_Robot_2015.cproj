@@ -98,6 +98,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="actuators.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="actuators.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="can.c">
       <SubType>compile</SubType>
     </Compile>

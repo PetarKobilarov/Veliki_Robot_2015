@@ -1,4 +1,3 @@
-
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdlib.h>
@@ -7,14 +6,16 @@
 #include "can.h"
 #include "usart.h"
 #include "sides.h"
+#include "actuators.h"
 
 
 
 int main(void)
 {
 	systemInit();
+	
 	while(1)
 		{
-			greenSide();
+			yellowSide();
 		}
 }
