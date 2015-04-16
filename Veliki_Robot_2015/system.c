@@ -93,9 +93,10 @@ void systemInit(void)
 	DDRG = 0xFF;
 	CAN_Init(4);
 	
-	forwardLeftSensor = GPIO_PinRegister(GPIOE_BASE, 4); // backwardRight je u stvari
-	forwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 6); // taster nazad 
-	backwardLeftSensor = GPIO_PinRegister(GPIOA_BASE, 7); // taster napred
+	forwardUpperLeftSensor = GPIO_PinRegister(GPIOA_BASE, 4);//prednji gornji levi senzor za detekciju protivnika
+	forwardUpperRightSensor = GPIO_PinRegister(GPIOA_BASE, 5); //prednji gornji desni senzor za detekciju protivnika
+	forwardLowerLeftSensor = GPIO_PinRegister(GPIOA_BASE, 6);//prednji donji levi senzor za detekciju valjka
+	forwardLowerRightSensor = GPIO_PinRegister(GPIOA_BASE, 7);//prednji levi levi senzor za detekciju valjka
 	
 	_delay_ms(1000);
 }

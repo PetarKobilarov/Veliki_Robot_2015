@@ -46,3 +46,66 @@ void colectThePopcorn(unsigned char side)
 			_delay_ms(50);
 	}
 }//END OF colectThePopcorn
+
+void leftDiafram(unsigned char state)
+{
+	unsigned char buffer[8];
+	
+	buffer[0] = 'C';
+	
+	if(state == ACTIVATE)
+	{
+		buffer[1] = ACTIVATE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
+	}else
+	{
+		buffer[1] = DEACTIVATE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
+	}
+}//END OF leftDiafram
+
+void rightDiafram(unsigned char state)
+{
+	unsigned char buffer[8];
+	
+	buffer[0] = 'D';
+	
+	if(state == ACTIVATE)
+	{
+		buffer[1] = ACTIVATE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
+	}else
+	{
+		buffer[1] = DEACTIVATE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
+	}
+}//END OF rightDiafram
+
+void liftMove(unsigned char state)
+{
+	unsigned char buffer[8];
+	
+	buffer[0] = 'E';
+	
+	if(state == ACTIVATE)
+	{
+		buffer[1] = ACTIVATE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
+	}else
+	{
+		buffer[1] = DEACTIVATE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
+	}
+}//END OF liftMove

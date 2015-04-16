@@ -9,7 +9,7 @@
 
 char detectionCallback(void)
 {
-	if(GPIO_PinRead(backwardLeftSensor) == 1 || GPIO_PinRead(forwardRightSensor) == 1)
+	/*if(GPIO_PinRead(backwardLeftSensor) == 1 || GPIO_PinRead(forwardRightSensor) == 1)
 	{
 		stop(SOFT_STOP);
 		PORTG = 0xFF;
@@ -18,7 +18,7 @@ char detectionCallback(void)
 
 	PORTG = 0;
 	
-	return 0;
+	return 0;*/
 }
 
 /*************************************************************************************************************************************************************************************

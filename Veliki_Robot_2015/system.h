@@ -18,6 +18,6 @@ void fillDebaunsingData(void);
 
 void Timer_Init(unsigned int freq);
 
-unsigned char forwardLeftSensor, backwardLeftSensor, forwardRightSensor, backwardRightSensor;
+unsigned char forwardUpperLeftSensor, backwardLeftSensor, forwardUpperRightSensor, backwardRightSensor, forwardLowerLeftSensor, forwardLowerRightSensor;
 void systemInit(void);
 #endif
