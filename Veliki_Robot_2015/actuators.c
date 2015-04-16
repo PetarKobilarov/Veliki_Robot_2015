@@ -17,6 +17,7 @@ void knockDownTheClapperboards(unsigned char side)
 		
 		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
 			_delay_ms(50);
+			PORTG = 0xff;
 	} else
 	{
 		buffer[1] = LEFT_SIDE;

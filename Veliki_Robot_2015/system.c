@@ -89,7 +89,6 @@ ISR(TIMER1_COMPA_vect)
 
 void systemInit(void)
 {
-	Timer_Init(1000);
 	DDRG = 0xFF;
 	CAN_Init(4);
 	
@@ -97,6 +96,35 @@ void systemInit(void)
 	forwardUpperRightSensor = GPIO_PinRegister(GPIOA_BASE, 5); //prednji gornji desni senzor za detekciju protivnika
 	forwardLowerLeftSensor = GPIO_PinRegister(GPIOA_BASE, 6);//prednji donji levi senzor za detekciju valjka
 	forwardLowerRightSensor = GPIO_PinRegister(GPIOA_BASE, 7);//prednji levi levi senzor za detekciju valjka
+	upperLiftSensor = GPIO_PinRegister(GPIOA_BASE, 3);//gornji senzor za detekciju pozicije lifta
+	lowerLiftSensor = GPIO_PinRegister(GPIOA_BASE, 2);//donji senzor za detekciju pozicije lifta
+	backwardLeftSensor = GPIO_PinRegister(GPIOA_BASE, 1);//zadnji senzor za detekciju protivnika
+	backwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 0);//zadnji senzor za detekciju protivnika
+	jumper = GPIO_PinRegister(GPIOE_BASE, 2);//jumper koji sluzi za startovanje robota
+	sidesSwitch = GPIO_PinRegister(GPIOE_BASE, 3);//prekidac za menjanje strana
+	
+	while(jumperCheck() == 1);
+	Timer_Init(1000);
 	
 	_delay_ms(1000);
 }
+
+int jumperCheck(void)
+{
+	if (GPIO_PinRead(jumper) == 0)
+	{
+		return 0;
+	}
+	
+	return 1;
+}//END OF jumperCheck
+
+int sidesSwitchCheck(void)
+{
+	if (GPIO_PinRead(sidesSwitch) == 0)
+	{
+		return 0;
+	}
+	
+	return 1;
+}//END OF sidesSwitchCheck

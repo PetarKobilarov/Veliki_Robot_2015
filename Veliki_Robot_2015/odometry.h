@@ -11,7 +11,7 @@
 
 #define LOW_SPEED					50
 #define NORMAL_SPEED				150
-#define HIGH_SPEED					220
+#define HIGH_SPEED					250
 
 #define FORWARD						1
 #define BACKWARD					-1

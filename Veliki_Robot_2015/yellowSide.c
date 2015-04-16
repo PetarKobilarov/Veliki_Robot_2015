@@ -13,12 +13,13 @@
 const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
 	//gotoXY({x,y,angle},speed,direction,callback)
-	{{600, 1067, 0}, LOW_SPEED, FORWARD, NULL},//izlazi iz startnog polja								//1
-	{{850, 1355, 0}, NORMAL_SPEED, FORWARD, NULL},//ide na poziciju prvog valjka						//2
-	{{1300, 1400, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka								//3
-	{{1100, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka								//4
-	{{450, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi							//5
-	{{150, 1800, 0}, NORMAL_SPEED, FORWARD, NULL}//ide po cetvrti i peti valjak							//6 
+	{{600, 1067, 0}, HIGH_SPEED, FORWARD, NULL},//izlazi iz startnog polja							//1
+	{{850, 1355, 0}, HIGH_SPEED, FORWARD, NULL},//ide na poziciju prvog valjka						//2
+	{{1300, 1400, 0}, HIGH_SPEED, FORWARD, NULL},//ide do drugog valjka								//3
+	{{1100, 1710, 0}, HIGH_SPEED, FORWARD, NULL},//ide do treceg valjka								//4
+	{{450, 1710, 0}, HIGH_SPEED, FORWARD, NULL},//ide do prve case koju kupi						//5
+	{{200, 1800, 0}, LOW_SPEED, FORWARD, NULL}//ide po cetvrti i peti valjak						//6 
+	
 	
 };
 
@@ -85,7 +86,7 @@ void yellowSide(void)
 				}else if(currentPosition == 5)
 				{
 					rotate(10, LOW_SPEED, NULL);
-					moveOnDirection(30, LOW_SPEED, NULL);
+					moveOnDirection(20, LOW_SPEED, NULL);
 					while(1);
 				}
 				

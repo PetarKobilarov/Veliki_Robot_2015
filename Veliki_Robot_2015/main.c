@@ -16,18 +16,25 @@ int main(void)
 	
 	while(1)
 		{
-			//yellowSide();
+			/*if (sidesSwitchCheck() == 0)
+			{
+				greenSide();
+			}
+			else
+			{
+				yellowSide();
+			}*/
 			
+			yellowSide();
+			
+			/*knockDownTheClapperboards(RIGHT_SIDE);
 			leftDiafram(ACTIVATE);
-			_delay_ms(1000);
-			leftDiafram(DEACTIVATE);
-			_delay_ms(1000);
 			rightDiafram(ACTIVATE);
-			_delay_ms(1000);
-			rightDiafram(DEACTIVATE);
-			_delay_ms(1000);
 			liftMove(ACTIVATE);
-			_delay_ms(1000);
-			liftMove(DEACTIVATE);
+			_delay_ms(15000);
+			leftDiafram(DEACTIVATE);
+			rightDiafram(DEACTIVATE);
+			liftMove(DEACTIVATE);*/
+			
 		}
 }
