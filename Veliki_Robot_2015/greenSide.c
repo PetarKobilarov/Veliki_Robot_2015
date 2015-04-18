@@ -6,6 +6,7 @@
 #include "can.h"
 #include "sides.h"
 #include "usart.h"
+#include "fat.h"
 
 char detectionCallback(void)
 {
@@ -16,9 +17,9 @@ char detectionCallback(void)
 		return 1;
 	}
 
-	PORTG = 0;
+	PORTG = 0;*/
 	
-	return 0;*/
+	return 0;
 }
 
 /*************************************************************************************************************************************************************************************
@@ -26,8 +27,11 @@ char detectionCallback(void)
 *************************************************************************************************************************************************************************************/
 const gotoFields greenSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
-	{{500, 500, 0}, LOW_SPEED, FORWARD, NULL},
-	{{1200, 500, 0}, LOW_SPEED, FORWARD, detectionCallback}
+	/*{{500, 500, 0}, LOW_SPEED, FORWARD, NULL},
+	{{1200, 500, 0}, LOW_SPEED, FORWARD, detectionCallback}*/
+	{{2300, 1030, 0}, LOW_SPEED, FORWARD, NULL}, //1
+	{{2130, 1355, 0}, LOW_SPEED, FORWARD, NULL}, //2
+	{{2700, 1800, 0}, LOW_SPEED, FORWARD, NULL}  //3
 };
 
 
@@ -42,8 +46,8 @@ void greenSide(void)
 	unsigned char currentPosition = 0, nextPosition = 0, odometryStatus;
 	unsigned char activeState = TACTIC_ONE;
 	
-	startingPosition.x = 0;
-	startingPosition.y = 0;
+	startingPosition.x = 2770;
+	startingPosition.y = 1030;
 	startingPosition.angle = 0;
 	setPosition(startingPosition);
 	
@@ -73,10 +77,13 @@ void greenSide(void)
 				}
 				else if(currentPosition == 1)
 				{
-					while(greenSideTacticOnePositions[currentPosition].detectionCallback() != 0)
+					/*while(greenSideTacticOnePositions[currentPosition].detectionCallback() != 0)
 						_delay_ms(100);
 										
 					currentPosition--;
+					while(1);*/
+				} else if (currentPosition == 2)
+				{
 					while(1);
 				}
 			}//end for

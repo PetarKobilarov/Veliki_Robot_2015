@@ -38,6 +38,7 @@ SUBDIRS :=
 C_SRCS +=  \
 ../actuators.c \
 ../can.c \
+../fat.c \
 ../fuse.c \
 ../greenSide.c \
 ../main.c \
@@ -56,6 +57,7 @@ ASM_SRCS +=
 OBJS +=  \
 actuators.o \
 can.o \
+fat.o \
 fuse.o \
 greenSide.o \
 main.o \
@@ -67,6 +69,7 @@ yellowSide.o
 OBJS_AS_ARGS +=  \
 actuators.o \
 can.o \
+fat.o \
 fuse.o \
 greenSide.o \
 main.o \
@@ -78,6 +81,7 @@ yellowSide.o
 C_DEPS +=  \
 actuators.d \
 can.d \
+fat.d \
 fuse.d \
 greenSide.d \
 main.d \
@@ -89,6 +93,7 @@ yellowSide.d
 C_DEPS_AS_ARGS +=  \
 actuators.d \
 can.d \
+fat.d \
 fuse.d \
 greenSide.d \
 main.d \
@@ -127,10 +132,12 @@ LIB_DEP+=
 
 
 
+
+
 ./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.3.3
-	$(QUOTE)C:\WinAVR-20100110\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=10000000ULL  -O0 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -pedantic -mmcu=at90can128 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\WinAVR-20100110\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-bitfields -DDEBUG -DF_CPU=10000000ULL  -O0 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -Wall -pedantic -mmcu=at90can128 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -159,7 +166,7 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR/GNU Linker : 4.3.3
-	$(QUOTE)C:\WinAVR-20100110\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="Veliki_Robot_2015.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mrelax -mmcu=at90can128  
+	$(QUOTE)C:\WinAVR-20100110\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="Veliki_Robot_2015.map" -Wl,-u,vfprintf -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mrelax -mmcu=at90can128  
 	@echo Finished building target: $@
 	"C:\WinAVR-20100110\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "Veliki_Robot_2015.elf" "Veliki_Robot_2015.hex"
 	"C:\WinAVR-20100110\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "Veliki_Robot_2015.elf" "Veliki_Robot_2015.eep" || exit 0

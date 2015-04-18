@@ -6,6 +6,8 @@ actuators.c
 
 can.c
 
+fat.c
+
 fuse.c
 
 greenSide.c

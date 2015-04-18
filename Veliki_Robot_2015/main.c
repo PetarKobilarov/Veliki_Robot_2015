@@ -7,6 +7,7 @@
 #include "usart.h"
 #include "sides.h"
 #include "actuators.h"
+#include "fat.h"
 
 
 
@@ -24,17 +25,7 @@ int main(void)
 			{
 				yellowSide();
 			}*/
-			
 			yellowSide();
-			
-			/*knockDownTheClapperboards(RIGHT_SIDE);
-			leftDiafram(ACTIVATE);
-			rightDiafram(ACTIVATE);
-			liftMove(ACTIVATE);
-			_delay_ms(15000);
-			leftDiafram(DEACTIVATE);
-			rightDiafram(DEACTIVATE);
-			liftMove(DEACTIVATE);*/
 			
 		}
 }

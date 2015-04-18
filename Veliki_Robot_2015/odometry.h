@@ -38,11 +38,11 @@ typedef enum
 // 1- zelis da ispadnes iz funkcije, stop se realizuje ili u callbacku ili posle ispada, vraca ODOMETRY_FAIL
 // 2- zelis da ispadnes iz funkcije, stop se realizuje kako hoces, vraca ODOMETRY_CALLBACK_RETURN
 char stop(char type);
-char moveOnDirection(int distance, unsigned char speed, char (*callback)(void));
-char gotoXY(position coordinates, unsigned char speed, signed char direction, char (*callback)(void));
+char moveOnDirection(int distance, unsigned char speed, char (*callback)(unsigned long startTime));
+char gotoXY(position coordinates, unsigned char speed, signed char direction, char (*callback)(unsigned long startTime));
 char setPosition(position coordinates);
-char rotate(int angle,unsigned char speed, char (*callback)(void));
-char setAngle(int angle, unsigned char speed, char (*callback)(void));
+char rotate(int angle,unsigned char speed, char (*callback)(unsigned long startTime));
+char setAngle(int angle, unsigned char speed, char (*callback)(unsigned long startTime));
 char getState(void);
 position getPosition(void);
 

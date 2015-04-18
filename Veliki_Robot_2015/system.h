@@ -1,7 +1,7 @@
 #ifndef SYSTEM_H_
 #define SYSTEM_H_
 
-#define MAX_INPUTS	    10
+#define MAX_INPUTS	    20
 #define USE_TIMER_HOOK  0
 
 #define GPIOA_BASE 0x22
@@ -10,6 +10,7 @@
 #define GPIOD_BASE 0x2B
 #define GPIOE_BASE 0x2E
 #define GPIOG_BASE 0x34
+#define GPIOF_BASE 0x31
 
 
 unsigned char GPIO_PinRegister(volatile unsigned char *baseAddress, unsigned char pin);
@@ -18,11 +19,16 @@ unsigned char GPIO_ReadFromRegister(unsigned char pinHandler);
 void fillDebaunsingData(void);
 
 void Timer_Init(unsigned int freq);
+void SPI_Init(void);
+unsigned char SPI_ReadWrite(unsigned char data);
 
 unsigned char forwardUpperLeftSensor, backwardLeftSensor, forwardUpperRightSensor, backwardRightSensor, forwardLowerLeftSensor, forwardLowerRightSensor, upperLiftSensor, lowerLiftSensor, jumper, sidesSwitch;
 
 void systemInit(void);
 int jumperCheck(void);
 int sidesSwitchCheck(void);
+unsigned long getSystemTime(void);
+
+void logger(const char *text, ...);
 
 #endif

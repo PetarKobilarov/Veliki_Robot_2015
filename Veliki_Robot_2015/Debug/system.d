@@ -14,7 +14,10 @@ system.d system.o system.o: .././system.c .././system.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h \
   c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h
+  c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h \
+  c:/winavr-20100110/lib/gcc/../../avr/include/stdio.h \
+  c:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stdarg.h \
+  c:/winavr-20100110/lib/gcc/../../avr/include/string.h .././fat.h
 
 .././system.h:
 
@@ -49,3 +52,11 @@ c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:
 c:/winavr-20100110/lib/gcc/../../avr/include/util/delay.h:
 
 c:/winavr-20100110/lib/gcc/../../avr/include/util/delay_basic.h:
+
+c:/winavr-20100110/lib/gcc/../../avr/include/stdio.h:
+
+c:\winavr-20100110\bin\../lib/gcc/avr/4.3.3/include/stdarg.h:
+
+c:/winavr-20100110/lib/gcc/../../avr/include/string.h:
+
+.././fat.h:
