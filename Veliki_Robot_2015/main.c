@@ -10,7 +10,6 @@
 #include "fat.h"
 
 
-
 int main(void)
 {
 	systemInit();
@@ -25,7 +24,11 @@ int main(void)
 			{
 				yellowSide();
 			}*/
-			yellowSide();
 			
-		}
+			yellowSide();
+
+			
+		
+		}//END OF while(1)
+			
 }

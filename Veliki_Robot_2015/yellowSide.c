@@ -9,23 +9,43 @@
 #include "actuators.h"
 #include "fat.h"
 
-unsigned char clapperboardsClapped = 0;
-
 char clapperboardsKnockDownYellowSide(unsigned long startTime)
 {
 	if(clapperboardsClapped == 0)
 	{
 		if(getSystemTime() - startTime >= 200)
 		{
-			knockDownTheClapperboards(RIGHT_SIDE);
-			knockDownTheClapperboards(RIGHT_SIDE);
+			knockDownTheClapperboards(LEFT_SIDE);
+			knockDownTheClapperboards(LEFT_SIDE);
 		}
 		clapperboardsClapped = 1;
 	}
-	PORTG = 0xFF;
+	
+	return 0;
+}//END OF clapperboardsKnockDownYellowSide
+
+char colectTheFirstStand(unsigned long startTime)
+{
+	if(standColected == 0)
+	{
+		if(getSystemTime() - startTime >= 500)
+		{
+			liftMove(UP, RIGHT_SIDE);	
+		}
+		
+		standColected = 1;
+	}
 	
 	return 0;
 }
+
+
+char popcornColectionYellowSide(unsigned long startTime)
+{
+	colectThePopcorn(RIGHT_SIDE);
+	
+	return 0;
+}//END OF popcornColectionYellowSide
 
 /*************************************************************************************************************************************************************************************
 																POZICIJE,BRZINE,SMEROVI I DETEKCIJE ZA ZUTU STRANU
@@ -33,14 +53,14 @@ char clapperboardsKnockDownYellowSide(unsigned long startTime)
 const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
 	//gotoXY({x,y,angle},speed,direction,callback)
-	{{600, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//izlazi iz startnog polja								//1
-	{{850, 1355, 0}, NORMAL_SPEED, FORWARD, NULL},//ide na poziciju prvog valjka							//2
-	{{1300, 1400, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka									//3
-	{{1100, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//4
-	{{450, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//5
-	{{200, 1800, 0}, NORMAL_SPEED, FORWARD, NULL},//ide po cetvrti i peti valjak							//6 
-	{{900, 1800, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownYellowSide},//rusi prve dve klapne			//7
-	{{500, 350, 0}, NORMAL_SPEED, FORWARD, NULL}//ide po sesti i sedmi valjak								//8
+	{{600, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//izlazi iz startnog polja								//0
+	{{850, 1355, 0}, NORMAL_SPEED, FORWARD, NULL},//ide na poziciju prvog valjka							//1
+	{{1300, 1400, 0}, NORMAL_SPEED, FORWARD, colectTheFirstStand},//ide do drugog valjka					//2
+	{{1100, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
+	{{450, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
+	{{200, 1800, 0}, NORMAL_SPEED, FORWARD, NULL},//ide po cetvrti i peti valjak							//5 
+	{{900, 1800, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownYellowSide},//rusi prve dve klapne			//6
+	{{400, 350, 0}, NORMAL_SPEED, FORWARD, NULL}//ide po sesti i sedmi valjak								//7
 	
 	
 };
@@ -93,19 +113,23 @@ void yellowSide(void)
 					
 				}else if(currentPosition == 2)
 				{
+					stop(SOFT_STOP);
+					_delay_ms(50);
+					liftMove(DOWN, RIGHT_SIDE);
+					_delay_ms(500);
+					liftMove(UP, RIGHT_SIDE);
+					_delay_ms(500);
 					
 				}else if(currentPosition == 3)
 				{
-					//rotate(40, LOW_SPEED, NULL);
 					
 				}else if(currentPosition == 4)
 				{
-					rotate(-45, LOW_SPEED, NULL);
-					moveOnDirection(150, LOW_SPEED, NULL);
+					rotate(-35, LOW_SPEED, NULL);
+					moveOnDirection(100, LOW_SPEED, popcornColectionYellowSide);
 					_delay_ms(250);
-					moveOnDirection(-150, LOW_SPEED, NULL);
+					moveOnDirection(-100, LOW_SPEED, NULL);
 					_delay_ms(250);
-					rotate(60, LOW_SPEED, NULL);
 					
 				}else if(currentPosition == 5)
 				{
@@ -113,7 +137,7 @@ void yellowSide(void)
 					moveOnDirection(20, LOW_SPEED, NULL);
 				}else if(currentPosition == 6)
 				{
-					PORTG = 0;
+				
 				}else if(currentPosition == 7)
 				{
 					while(1);

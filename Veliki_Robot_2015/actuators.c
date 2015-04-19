@@ -5,7 +5,7 @@
 #include "can.h"
 #include "actuators.h"
 
-void knockDownTheClapperboards(unsigned char side)
+void knockDownTheClapperboards(signed char side)
 {
 	unsigned char buffer[8];
 	
@@ -26,7 +26,7 @@ void knockDownTheClapperboards(unsigned char side)
 	}
 }//END OF knockDownTheClapperboards
 
-void colectThePopcorn(unsigned char side)
+void colectThePopcorn(signed char side)
 {
 	unsigned char buffer[8];
 	
@@ -47,7 +47,7 @@ void colectThePopcorn(unsigned char side)
 	}
 }//END OF colectThePopcorn
 
-void leftDiafram(unsigned char state)
+void leftDiafram(signed char state)
 {
 	unsigned char buffer[8];
 	
@@ -66,9 +66,10 @@ void leftDiafram(unsigned char state)
 		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
 			_delay_ms(50);
 	}
+	
 }//END OF leftDiafram
 
-void rightDiafram(unsigned char state)
+void rightDiafram(signed char state)
 {
 	unsigned char buffer[8];
 	
@@ -87,9 +88,10 @@ void rightDiafram(unsigned char state)
 		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
 			_delay_ms(50);
 	}
+	
 }//END OF rightDiafram
 
-void liftMove(unsigned char state)
+void liftStates(signed char state)
 {
 	unsigned char buffer[8];
 	
@@ -108,4 +110,54 @@ void liftMove(unsigned char state)
 		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
 			_delay_ms(50);
 	}
+}//END OF liftStates
+
+signed char liftMove(signed char vertically, signed char side)
+{
+	if(vertically == UP)
+	{	
+		if(side == RIGHT_SIDE)
+		{
+			rightDiafram(ACTIVATE);
+		}else if(side == LEFT_SIDE)
+		{
+			leftDiafram(ACTIVATE);
+		}else
+		{
+			rightDiafram(ACTIVATE);
+			leftDiafram(ACTIVATE);
+		}
+		
+		
+		liftStates(ACTIVATE);
+		
+		if(checkLiftSensor(UP) == 0)
+		{
+			return FAIL;
+		}
+		
+	}else 
+	{
+		liftStates(DEACTIVATE);
+		
+		if(side == RIGHT_SIDE)
+		{
+			rightDiafram(DEACTIVATE);
+		}else if(side == LEFT_SIDE)
+		{
+			leftDiafram(DEACTIVATE);
+		}else
+		{
+			rightDiafram(ACTIVATE);
+			leftDiafram(ACTIVATE);
+		}
+		
+		if(checkLiftSensor(DOWN) == 0)
+		{
+			return FAIL;
+		}
+		
+	}
+	
+	return SUCCESS;
 }//END OF liftMove

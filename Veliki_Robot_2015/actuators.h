@@ -5,14 +5,22 @@
 
 #define RIGHT_SIDE	1
 #define LEFT_SIDE	-1
+#define BOTH		2
 
 #define ACTIVATE	1
 #define DEACTIVATE	-1
 
-void knockDownTheClapperboards(unsigned char side);
-void colectThePopcorn(unsigned char side);
-void leftDiafram(unsigned char state);
-void rightDiafram(unsigned char state);
-void liftMove(unsigned char state);
+#define UP			1
+#define DOWN		-1
+
+#define SUCCESS		1
+#define FAIL		-1
+
+void knockDownTheClapperboards(signed char side);
+void colectThePopcorn(signed char side);
+void leftDiafram(signed char state);
+void rightDiafram(signed char state);
+void liftStates(signed char state);
+signed char liftMove(signed char vertically, signed char side);
 
 #endif
