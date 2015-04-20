@@ -1,40 +1,43 @@
-usart.d usart.o usart.o: .././usart.c \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/sfr_defs.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/inttypes.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/stdint.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/iocan128.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/iocanxx.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/portpins.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/common.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/version.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h \
-  c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h \
-  .././usart.h
+usart.d usart.o: .././usart.c \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\io.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\inttypes.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdint.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdint.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\iocan128.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\iocanxx.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\portpins.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\common.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\version.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\fuse.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\lock.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
+ .././usart.h
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/io.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\io.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/sfr_defs.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/inttypes.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\inttypes.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/stdint.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdint.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/iocan128.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdint.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/iocanxx.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\iocan128.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/portpins.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\iocanxx.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/common.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\portpins.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/version.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\common.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/fuse.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\version.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/lock.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\fuse.h:
 
-c:/winavr-20100110/lib/gcc/../../avr/include/avr/interrupt.h:
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\lock.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
 .././usart.h:

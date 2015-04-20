@@ -65,7 +65,7 @@ const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 	{{1200, 1500, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka					//2
 	{{1030, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
 	{{420, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
-	{{200, 1800, 0}, NORMAL_SPEED, FORWARD, NULL},//ide po cetvrti i peti valjak							//5 
+	{{100, 1850, 0}, NORMAL_SPEED, FORWARD, NULL},//ide po cetvrti i peti valjak							//5 
 	{{900, 1800, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownYellowSide},//rusi prve dve klapne			//6
 	{{400, 350, 0}, NORMAL_SPEED, FORWARD, NULL}//ide po sesti i sedmi valjak								//7
 	
@@ -143,6 +143,7 @@ void yellowSide(void)
 					
 					
 					rotate(-90, LOW_SPEED, popcornColectionYellowSide);
+					moveOnDirection(80, LOW_SPEED, NULL);
 					_delay_ms(250);
 					rotate(90, LOW_SPEED, NULL);
 					

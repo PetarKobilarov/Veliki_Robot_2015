@@ -5,7 +5,7 @@
 #include "can.h"
 #include "actuators.h"
 
-void knockDownTheClapperboards(signed char side)
+void knockDownTheClapperboards(signed char side, signed char state)
 {
 	unsigned char buffer[8];
 	
@@ -26,7 +26,7 @@ void knockDownTheClapperboards(signed char side)
 	}
 }//END OF knockDownTheClapperboards
 
-void colectThePopcorn(signed char side)
+void colectThePopcorn(signed char side, signed char state)
 {
 	unsigned char buffer[8];
 	
