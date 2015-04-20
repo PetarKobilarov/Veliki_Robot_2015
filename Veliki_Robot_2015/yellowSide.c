@@ -72,6 +72,7 @@ const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 	{{1200, 1500, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka									//2
 	{{1030, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
 	{{420, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
+	{{420, 1850, 0}, NORMAL_SPEED, FORWARD, NULL},	
 	{{120, 1850, 0}, NORMAL_SPEED, FORWARD, NULL},//ide po cetvrti i peti valjak							//5 
 	{{900, 1800, 0}, LOW_SPEED, BACKWARD, NULL},//rusi prve dve nase klapne		//6
 	{{400, 350, 0}, NORMAL_SPEED, FORWARD, NULL}//ostavlja kulu na crveno polje								//7
@@ -154,11 +155,14 @@ void yellowSide(void)
 					colectThePopcorn(RIGHT_SIDE, DEACTIVATE);
 					_delay_ms(250);
 					rotate(90, LOW_SPEED, NULL);
-					
+					moveOnDirection(-80, LOW_SPEED, NULL);
 				}else if(currentPosition == 5)
 				{
-					rotate(10, LOW_SPEED, NULL);
-					moveOnDirection(10, LOW_SPEED, NULL);
+					
+				}else if(currentPosition == 6)
+				{
+					//rotate(10, LOW_SPEED, NULL);
+					//moveOnDirection(10, LOW_SPEED, NULL);
 					_delay_ms(50);
 					liftMove(DOWN, BOTH);
 					_delay_ms(1000);
@@ -169,10 +173,10 @@ void yellowSide(void)
 					rotate(30, LOW_SPEED, NULL);
 					knockDownTheClapperboards(LEFT_SIDE, ACTIVATE);
 					rotate(-30, LOW_SPEED, NULL);
-				}else if(currentPosition == 6)
+				}else if(currentPosition == 7)
 				{
 					knockDownTheClapperboards(LEFT_SIDE, DEACTIVATE);
-				}else if(currentPosition == 7)
+				}else if(currentPosition == 8)
 				{
 					while(1);
 				}

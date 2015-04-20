@@ -1,4 +1,4 @@
-#define TACTIC_ONE_POSITION_COUNT	8
+#define TACTIC_ONE_POSITION_COUNT	9
 
 typedef enum
 {
