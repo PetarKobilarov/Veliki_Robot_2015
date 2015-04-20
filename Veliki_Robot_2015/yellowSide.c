@@ -13,11 +13,16 @@ char clapperboardsKnockDownYellowSide(unsigned long startTime)
 {
 	if(clapperboardsClapped == 0)
 	{
-		if(getSystemTime() - startTime >= 200)
+		
+		if(getSystemTime() - startTime < 200 || (getSystemTime() - startTime > 700 && getSystemTime() - startTime<1500))
 		{
-			//knockDownTheClapperboards(LEFT_SIDE);
-			//knockDownTheClapperboards(LEFT_SIDE);
+			knockDownTheClapperboards(LEFT_SIDE, ACTIVATE);
 		}
+		if((getSystemTime() - startTime >= 200 && getSystemTime() - startTime <700)|| (getSystemTime() - startTime>1500))
+		{
+			knockDownTheClapperboards(LEFT_SIDE, DEACTIVATE);
+		}
+		
 		clapperboardsClapped = 1;
 	}
 	
@@ -48,6 +53,8 @@ char popcornColectionYellowSide(unsigned long startTime)
 	if(popcornColected == 0)
 	{
 		//colectThePopcorn(RIGHT_SIDE);
+		colectThePopcorn(RIGHT_SIDE, ACTIVATE);
+		
 		popcornColected = 1;
 	}
 		
@@ -62,12 +69,12 @@ const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 	//gotoXY({x,y,angle},speed,direction,callback)
 	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//izlazi iz startnog polja								//0
 	{{730, 1450, 0}, NORMAL_SPEED, FORWARD, NULL},//ide na poziciju prvog valjka							//1
-	{{1200, 1500, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka					//2
+	{{1200, 1500, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka									//2
 	{{1030, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
 	{{420, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
-	{{100, 1850, 0}, NORMAL_SPEED, FORWARD, NULL},//ide po cetvrti i peti valjak							//5 
-	{{900, 1800, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownYellowSide},//rusi prve dve klapne			//6
-	{{400, 350, 0}, NORMAL_SPEED, FORWARD, NULL}//ide po sesti i sedmi valjak								//7
+	{{120, 1850, 0}, NORMAL_SPEED, FORWARD, NULL},//ide po cetvrti i peti valjak							//5 
+	{{900, 1800, 0}, LOW_SPEED, BACKWARD, NULL},//rusi prve dve nase klapne		//6
+	{{400, 350, 0}, NORMAL_SPEED, FORWARD, NULL}//ostavlja kulu na crveno polje								//7
 	
 	
 };
@@ -144,16 +151,27 @@ void yellowSide(void)
 					
 					rotate(-90, LOW_SPEED, popcornColectionYellowSide);
 					moveOnDirection(80, LOW_SPEED, NULL);
+					colectThePopcorn(RIGHT_SIDE, DEACTIVATE);
 					_delay_ms(250);
 					rotate(90, LOW_SPEED, NULL);
 					
 				}else if(currentPosition == 5)
 				{
 					rotate(10, LOW_SPEED, NULL);
-					moveOnDirection(20, LOW_SPEED, NULL);
+					moveOnDirection(10, LOW_SPEED, NULL);
+					_delay_ms(50);
+					liftMove(DOWN, BOTH);
+					_delay_ms(1000);
+					leftDiafram(ACTIVATE);
+					rightDiafram(ACTIVATE);
+					while(1);
+					moveOnDirection(-30, LOW_SPEED, NULL);
+					rotate(30, LOW_SPEED, NULL);
+					knockDownTheClapperboards(LEFT_SIDE, ACTIVATE);
+					rotate(-30, LOW_SPEED, NULL);
 				}else if(currentPosition == 6)
 				{
-				
+					knockDownTheClapperboards(LEFT_SIDE, DEACTIVATE);
 				}else if(currentPosition == 7)
 				{
 					while(1);

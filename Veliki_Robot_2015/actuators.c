@@ -171,8 +171,8 @@ signed char liftMove(signed char vertically, signed char side)
 			leftDiafram(DEACTIVATE);
 		}else
 		{
-			rightDiafram(ACTIVATE);
-			leftDiafram(ACTIVATE);
+			rightDiafram(DEACTIVATE);
+			leftDiafram(DEACTIVATE);
 		}
 		
 		if(checkLiftSensor(DOWN) == 0)

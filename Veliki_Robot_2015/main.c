@@ -24,9 +24,10 @@ int main(void)
 			{
 				yellowSide();
 			}*/
+			
 			liftMove(UP, LEFT_SIDE);
 			yellowSide();
-		
+			
 		}//END OF while(1)
 			
 }
