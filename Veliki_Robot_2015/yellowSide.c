@@ -9,20 +9,17 @@
 #include "actuators.h"
 #include "fat.h"
 
+char releaseCup(unsigned long startTime)
+{
+	colectThePopcorn(RIGHT_SIDE, DEACTIVATE);
+	return 0;
+}
+
 char clapperboardsKnockDownYellowSide(unsigned long startTime)
 {
 	if(clapperboardsClapped == 0)
 	{
-		
-		if(getSystemTime() - startTime < 200 || (getSystemTime() - startTime > 700 && getSystemTime() - startTime<1500))
-		{
-			knockDownTheClapperboards(LEFT_SIDE, ACTIVATE);
-		}
-		if((getSystemTime() - startTime >= 200 && getSystemTime() - startTime <700)|| (getSystemTime() - startTime>1500))
-		{
-			knockDownTheClapperboards(LEFT_SIDE, DEACTIVATE);
-		}
-		
+		//ubaciti da udari oba
 		clapperboardsClapped = 1;
 	}
 	
@@ -72,11 +69,9 @@ const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 	{{1200, 1500, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka									//2
 	{{1030, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
 	{{420, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
-	{{420, 1850, 0}, NORMAL_SPEED, FORWARD, NULL},	
-	{{120, 1850, 0}, NORMAL_SPEED, FORWARD, NULL},//ide po cetvrti i peti valjak							//5 
-	{{900, 1800, 0}, LOW_SPEED, BACKWARD, NULL},//rusi prve dve nase klapne		//6
-	{{400, 350, 0}, NORMAL_SPEED, FORWARD, NULL}//ostavlja kulu na crveno polje								//7
-	
+	{{900, 1800, 0}, LOW_SPEED, BACKWARD, NULL},//rusi prve dve nase klapne									//5
+	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//ide da ostavi kulu										//6
+	{{450, 1067, 0}, NORMAL_SPEED, FORWARD, NULL}//ostavlja casu											//7
 	
 };
 
@@ -121,13 +116,14 @@ void yellowSide(void)
 				
 				if(currentPosition == 0)
 				{
-					//rotate(55, LOW_SPEED, NULL);
+					
 				}
 				else if(currentPosition == 1)
 				{
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
+					
 				}else if(currentPosition == 2)
 				{
 					stop(SOFT_STOP);
@@ -135,7 +131,7 @@ void yellowSide(void)
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
-					_delay_ms(500);
+					//_delay_ms(500);
 					
 				}else if(currentPosition == 3)
 				{
@@ -147,37 +143,50 @@ void yellowSide(void)
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
-					_delay_ms(500);
 					
 					
 					rotate(-90, LOW_SPEED, popcornColectionYellowSide);
 					moveOnDirection(80, LOW_SPEED, NULL);
 					colectThePopcorn(RIGHT_SIDE, DEACTIVATE);
-					_delay_ms(250);
-					rotate(90, LOW_SPEED, NULL);
+					rotate(100, LOW_SPEED, NULL);
 					moveOnDirection(-80, LOW_SPEED, NULL);
-				}else if(currentPosition == 5)
-				{
-					
-				}else if(currentPosition == 6)
-				{
-					//rotate(10, LOW_SPEED, NULL);
-					//moveOnDirection(10, LOW_SPEED, NULL);
+					rotate(-15, LOW_SPEED, NULL);
+					moveOnDirection(300, NORMAL_SPEED, NULL);
+					moveOnDirection(100, 30, NULL);
 					_delay_ms(50);
 					liftMove(DOWN, BOTH);
-					_delay_ms(1000);
+					_delay_ms(500);
 					leftDiafram(ACTIVATE);
 					rightDiafram(ACTIVATE);
-					while(1);
+					_delay_ms(50);
 					moveOnDirection(-30, LOW_SPEED, NULL);
 					rotate(30, LOW_SPEED, NULL);
 					knockDownTheClapperboards(LEFT_SIDE, ACTIVATE);
 					rotate(-30, LOW_SPEED, NULL);
-				}else if(currentPosition == 7)
+				}else if(currentPosition == 5)
 				{
 					knockDownTheClapperboards(LEFT_SIDE, DEACTIVATE);
-				}else if(currentPosition == 8)
+				}else if(currentPosition == 6)
 				{
+					
+				}else if(currentPosition == 7)
+				{
+					leftDiafram(DEACTIVATE);
+					_delay_ms(5000);
+					moveOnDirection(-200, LOW_SPEED, NULL);
+					rotate(-90, LOW_SPEED, releaseCup);
+					/*
+					moveOnDirection(50, LOW_SPEED, NULL);
+					colectThePopcorn(RIGHT_SIDE, ACTIVATE);
+					moveOnDirection(-200, LOW_SPEED, NULL);
+					//treba zatcoriti
+					
+					colectThePopcorn(LEFT_SIDE, ACTIVATE);
+					moveOnDirection(50, LOW_SPEED, NULL);
+					colectThePopcorn(LEFT_SIDE,DEACTIVATE);
+					
+					rotate(360,NORMAL_SPEED,NULL);
+					*/
 					while(1);
 				}
 				
