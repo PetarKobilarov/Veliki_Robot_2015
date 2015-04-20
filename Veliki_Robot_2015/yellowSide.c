@@ -15,8 +15,8 @@ char clapperboardsKnockDownYellowSide(unsigned long startTime)
 	{
 		if(getSystemTime() - startTime >= 200)
 		{
-			knockDownTheClapperboards(LEFT_SIDE);
-			knockDownTheClapperboards(LEFT_SIDE);
+			//knockDownTheClapperboards(LEFT_SIDE);
+			//knockDownTheClapperboards(LEFT_SIDE);
 		}
 		clapperboardsClapped = 1;
 	}
@@ -47,7 +47,7 @@ char popcornColectionYellowSide(unsigned long startTime)
 {
 	if(popcornColected == 0)
 	{
-		colectThePopcorn(RIGHT_SIDE);
+		//colectThePopcorn(RIGHT_SIDE);
 		popcornColected = 1;
 	}
 		

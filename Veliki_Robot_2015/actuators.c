@@ -15,11 +15,20 @@ void knockDownTheClapperboards(signed char side, signed char state)
 	{
 		buffer[1] = RIGHT_SIDE;
 		
-		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
-			_delay_ms(50);
 	} else
 	{
 		buffer[1] = LEFT_SIDE;
+	}
+	
+	if(state == ACTIVATE)
+	{
+		buffer[2] = ACTIVATE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
+	}else if(state == DEACTIVATE)
+	{
+		buffer[2] = DEACTIVATE;
 		
 		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
 			_delay_ms(50);
@@ -41,6 +50,20 @@ void colectThePopcorn(signed char side, signed char state)
 	} else
 	{
 		buffer[1] = LEFT_SIDE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
+	}
+	
+	if(state == ACTIVATE)
+	{
+		buffer[2] = ACTIVATE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
+	}else if(state == DEACTIVATE)
+	{
+		buffer[2] = DEACTIVATE;
 		
 		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
 			_delay_ms(50);
