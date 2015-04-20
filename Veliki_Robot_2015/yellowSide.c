@@ -28,9 +28,12 @@ char colectTheFirstStand(unsigned long startTime)
 {
 	if(standColected == 0)
 	{
-		if(getSystemTime() - startTime >= 500)
+		if(getSystemTime() - startTime >= 300)
 		{
-			liftMove(UP, RIGHT_SIDE);	
+			_delay_ms(500);
+			liftMove(DOWN, LEFT_SIDE);
+			_delay_ms(500);
+			liftMove(UP, LEFT_SIDE);	
 		}
 		
 		standColected = 1;
@@ -42,8 +45,12 @@ char colectTheFirstStand(unsigned long startTime)
 
 char popcornColectionYellowSide(unsigned long startTime)
 {
-	colectThePopcorn(RIGHT_SIDE);
-	
+	if(popcornColected == 0)
+	{
+		colectThePopcorn(RIGHT_SIDE);
+		popcornColected = 1;
+	}
+		
 	return 0;
 }//END OF popcornColectionYellowSide
 
@@ -53,11 +60,11 @@ char popcornColectionYellowSide(unsigned long startTime)
 const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
 	//gotoXY({x,y,angle},speed,direction,callback)
-	{{600, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//izlazi iz startnog polja								//0
-	{{850, 1355, 0}, NORMAL_SPEED, FORWARD, NULL},//ide na poziciju prvog valjka							//1
-	{{1300, 1400, 0}, NORMAL_SPEED, FORWARD, colectTheFirstStand},//ide do drugog valjka					//2
-	{{1100, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
-	{{450, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
+	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//izlazi iz startnog polja								//0
+	{{730, 1450, 0}, NORMAL_SPEED, FORWARD, NULL},//ide na poziciju prvog valjka							//1
+	{{1200, 1500, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka					//2
+	{{1030, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
+	{{420, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
 	{{200, 1800, 0}, NORMAL_SPEED, FORWARD, NULL},//ide po cetvrti i peti valjak							//5 
 	{{900, 1800, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownYellowSide},//rusi prve dve klapne			//6
 	{{400, 350, 0}, NORMAL_SPEED, FORWARD, NULL}//ide po sesti i sedmi valjak								//7
@@ -110,14 +117,16 @@ void yellowSide(void)
 				}
 				else if(currentPosition == 1)
 				{
-					
+					liftMove(DOWN, LEFT_SIDE);
+					_delay_ms(500);
+					liftMove(UP, LEFT_SIDE);
 				}else if(currentPosition == 2)
 				{
 					stop(SOFT_STOP);
 					_delay_ms(50);
-					liftMove(DOWN, RIGHT_SIDE);
+					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
-					liftMove(UP, RIGHT_SIDE);
+					liftMove(UP, LEFT_SIDE);
 					_delay_ms(500);
 					
 				}else if(currentPosition == 3)
@@ -125,11 +134,17 @@ void yellowSide(void)
 					
 				}else if(currentPosition == 4)
 				{
-					rotate(-35, LOW_SPEED, NULL);
-					moveOnDirection(100, LOW_SPEED, popcornColectionYellowSide);
+					stop(SOFT_STOP);
+					_delay_ms(50);
+					liftMove(DOWN, LEFT_SIDE);
+					_delay_ms(500);
+					liftMove(UP, LEFT_SIDE);
+					_delay_ms(500);
+					
+					
+					rotate(-90, LOW_SPEED, popcornColectionYellowSide);
 					_delay_ms(250);
-					moveOnDirection(-100, LOW_SPEED, NULL);
-					_delay_ms(250);
+					rotate(90, LOW_SPEED, NULL);
 					
 				}else if(currentPosition == 5)
 				{
