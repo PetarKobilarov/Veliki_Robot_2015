@@ -40,8 +40,8 @@ unsigned char GPIO_PinRegister(volatile unsigned char *baseAddress, unsigned cha
 	for(i = 0; i < 3; i++)
 		gpios[inputsNumber]->buffer[i] = 0;
 
-	_MMIO_BYTE(baseAddress - 1) &= ~(1 << pin);
-	_MMIO_BYTE(baseAddress) |= (1 << pin);
+	_MMIO_BYTE(baseAddress - 1) &= (0 << pin);
+	_MMIO_BYTE(baseAddress) &= (0 << pin);
 
 	i = inputsNumber;
 	inputsNumber++;
