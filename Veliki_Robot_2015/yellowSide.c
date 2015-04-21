@@ -103,7 +103,7 @@ const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 	{{450, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//ostavlja casu											//7
 	{{700, 380, 0}, NORMAL_SPEED, FORWARD, NULL}, //hvata 2 valjka kod podijuma								//8
 	{{300, 400, 0}, NORMAL_SPEED, FORWARD, releaseRightStand},//hvata poslednji valjak						//9
-	{{600, 500, 0}, NORMAL_SPEED, BACKWARD, NULL}//ostavlja drugu kulu  						//10
+	{{600, 500, 0}, NORMAL_SPEED, BACKWARD, NULL}//ostavlja drugu kulu  									//10
 };
 
 

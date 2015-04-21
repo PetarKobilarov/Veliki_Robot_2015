@@ -21,8 +21,9 @@ void Timer_Init(unsigned int freq);
 //void SPI_Init(void);
 //unsigned char SPI_ReadWrite(unsigned char data);
 
-unsigned char forwardUpperLeftSensor, backwardLeftSensor, forwardUpperRightSensor, backwardRightSensor, forwardLowerLeftSensor, forwardLowerRightSensor, upperLiftSensor, lowerLiftSensor, jumper, sidesSwitch;
+unsigned char forwardUpperLeftSensor, backwardLeftSensor, forwardUpperRightSensor, backwardRightSensor, forwardLowerLeftSensor, forwardLowerRightSensor, upperLiftSensor, forwardMiddleSensor, backwardMiddleSensor, lowerLiftSensor, jumper, sidesSwitch;
 unsigned char clapperboardsClapped, popcornColected, standColected;
+unsigned char sensor;
 
 void systemInit(void);
 int jumperCheck(void);

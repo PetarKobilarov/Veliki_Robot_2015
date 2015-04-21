@@ -25,7 +25,17 @@ int main(void)
 				yellowSide();
 			}*/
 			
-			yellowSide();
+			//yellowSide();
+			
+			/*//if ((GPIO_PinRead(forwardLowerLeftSensor) == 1) || (GPIO_PinRead(forwardLowerRightSensor) == 1) || (GPIO_PinRead(backwardLeftSensor) == 1) || (GPIO_PinRead(backwardRightSensor) == 1) || (GPIO_PinRead(forwardUpperLeftSensor) == 1) || (GPIO_PinRead(forwardUpperRightSensor) == 1) || (GPIO_PinRead(upperLiftSensor) == 1) || (GPIO_PinRead(lowerLiftSensor) == 1))
+			if((GPIO_PinRead(backwardMiddleSensor) == 0) || (GPIO_PinRead(forwardMiddleSensor) == 0))
+			{
+				PORTG = 0xFF;
+			}else
+			{
+				PORTG = 0;
+			}*/
+			
 			
 		}//END OF while(1)
 			

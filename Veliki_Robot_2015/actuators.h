@@ -24,4 +24,9 @@ void rightDiafram(signed char state);
 void liftStates(signed char state);
 signed char liftMove(signed char vertically, signed char side);
 
+void servo_init(unsigned int f_pwm);
+void servo_position1(unsigned char dutyCycle);
+void servo_position2(unsigned char dutyCycle);
+void servo_position3(unsigned char dutyCycle);
+
 #endif
