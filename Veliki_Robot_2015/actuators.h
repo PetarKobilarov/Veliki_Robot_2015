@@ -9,6 +9,7 @@
 
 #define ACTIVATE	1
 #define DEACTIVATE	-1
+#define CLOSE		2
 
 #define UP			1
 #define DOWN		-1

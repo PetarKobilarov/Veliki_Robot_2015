@@ -15,7 +15,7 @@
     <AssemblyName>Veliki_Robot_2015</AssemblyName>
     <Name>Veliki_Robot_2015</Name>
     <RootNamespace>Veliki_Robot_2015</RootNamespace>
-    <ToolchainFlavour>Native</ToolchainFlavour>
+    <ToolchainFlavour>WINAvr</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>

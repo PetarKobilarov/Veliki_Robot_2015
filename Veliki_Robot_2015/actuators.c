@@ -67,6 +67,12 @@ void colectThePopcorn(signed char side, signed char state)
 		
 		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
 			_delay_ms(50);
+	}else if(state == CLOSE)
+	{
+		buffer[2] = CLOSE;
+		
+		while(CAN_Write(buffer, DRIVER_LIFT_TX_IDENTIFICATOR))
+			_delay_ms(50);
 	}
 }//END OF colectThePopcorn
 
