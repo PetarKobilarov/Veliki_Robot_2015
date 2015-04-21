@@ -9,6 +9,29 @@
 #include "actuators.h"
 #include "fat.h"
 
+char correctRightStand(unsigned long startTime)
+{
+	standColected = 0;
+	if(standColected == 0)
+	{
+		liftMove(DOWN, RIGHT_SIDE);
+		standColected = 1;
+		return 0;
+	}
+}
+
+char releaseRightStand(unsigned long startTime)
+{
+	standColected = 0;
+	if(standColected == 0)
+	{
+		//liftMove(DOWN, RIGHT_SIDE);
+		rightDiafram(DEACTIVATE);
+		standColected = 1;
+		return 0;
+	}
+}
+
 char releaseCup(unsigned long startTime)
 {
 	colectThePopcorn(RIGHT_SIDE, DEACTIVATE);
@@ -19,7 +42,13 @@ char clapperboardsKnockDownYellowSide(unsigned long startTime)
 {
 	if(clapperboardsClapped == 0)
 	{
-		//ubaciti da udari oba
+		if(getSystemTime() - startTime >= 300)
+		{
+			knockDownTheClapperboards(LEFT_SIDE, DEACTIVATE);
+		}else if(getSystemTime() - startTime >= 650)
+		{
+			knockDownTheClapperboards(LEFT_SIDE, ACTIVATE);
+		}
 		clapperboardsClapped = 1;
 	}
 	
@@ -66,14 +95,15 @@ const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 	//gotoXY({x,y,angle},speed,direction,callback)
 	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//izlazi iz startnog polja								//0
 	{{730, 1450, 0}, NORMAL_SPEED, FORWARD, NULL},//ide na poziciju prvog valjka							//1
-	{{1200, 1500, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka									//2
+	{{1200, 1520, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka									//2
 	{{1030, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
-	{{420, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
+	{{430, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
 	{{900, 1800, 0}, LOW_SPEED, BACKWARD, NULL},//rusi prve dve nase klapne									//5
-	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//ide da ostavi kulu										//6
+	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, correctRightStand},//ide da ostavi kulu							//6
 	{{450, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//ostavlja casu											//7
-	{{800, 350, 0}, NORMAL_SPEED, FORWARD, NULL},
-	{{800, 100, 0}, NORMAL_SPEED, FORWARD, NULL}
+	{{700, 380, 0}, NORMAL_SPEED, FORWARD, NULL}, //hvata 2 valjka kod podijuma								//8
+	{{300, 400, 0}, NORMAL_SPEED, FORWARD, releaseRightStand},//hvata poslednji valjak						//9
+	{{600, 500, 0}, NORMAL_SPEED, BACKWARD, NULL}//ostavlja drugu kulu  						//10
 };
 
 
@@ -145,15 +175,15 @@ void yellowSide(void)
 					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
 					
-					
-					rotate(-90, LOW_SPEED, popcornColectionYellowSide);
+				//	colectThePopcorn(RIGHT_SIDE, ACTIVATE);
+					rotate(-90, LOW_SPEED,popcornColectionYellowSide);	
 					moveOnDirection(80, LOW_SPEED, NULL);
 					colectThePopcorn(RIGHT_SIDE, DEACTIVATE);
 					rotate(100, LOW_SPEED, NULL);
 					moveOnDirection(-80, LOW_SPEED, NULL);
 					rotate(-15, LOW_SPEED, NULL);
 					moveOnDirection(300, NORMAL_SPEED, NULL);
-					moveOnDirection(100, 30, NULL);
+					moveOnDirection(110, 30, NULL);
 					_delay_ms(50);
 					liftMove(DOWN, BOTH);
 					_delay_ms(500);
@@ -169,27 +199,62 @@ void yellowSide(void)
 					knockDownTheClapperboards(LEFT_SIDE, DEACTIVATE);
 				}else if(currentPosition == 6)
 				{
-					
+					rightDiafram(ACTIVATE);
 				}else if(currentPosition == 7)
 				{
 					leftDiafram(DEACTIVATE);
 					_delay_ms(5000);
 					moveOnDirection(-200, LOW_SPEED, NULL);
+					liftMove(UP, RIGHT_SIDE);
 					rotate(-90, LOW_SPEED, releaseCup);
 					_delay_ms(50);
 					
-					moveOnDirection(150, LOW_SPEED, NULL);
+					moveOnDirection(100, LOW_SPEED, NULL);//Zasto sporo
 					_delay_ms(100);
 					colectThePopcorn(RIGHT_SIDE, ACTIVATE);
 					_delay_ms(100);
-					moveOnDirection(-250, LOW_SPEED, NULL);
-					//treba zatvoriti
+					moveOnDirection(-230, NORMAL_SPEED, NULL);//Zasto sporo ide ???
+					colectThePopcorn(RIGHT_SIDE,CLOSE);
+					
+					liftMove(UP, RIGHT_SIDE);
 					
 					rotate(180,NORMAL_SPEED, NULL);
 					
-					while(1);
-				}
+			}else if(currentPosition == 8)
+			{  
+				liftMove(DOWN, RIGHT_SIDE);
+				_delay_ms(500);
+				liftMove(UP, RIGHT_SIDE);
+				_delay_ms(500);
+				moveOnDirection(70, LOW_SPEED, NULL);
+				liftMove(DOWN, RIGHT_SIDE);
+				_delay_ms(500);
+				//liftMove(UP, RIGHT_SIDE);
+				rightDiafram(ACTIVATE);
+				_delay_ms(500);
+				moveOnDirection(-290, NORMAL_SPEED, NULL);
+				//moveOnDirection(150, LOW_SPEED, NULL);
 				
+		}else if(currentPosition == 9)
+		{
+			liftMove(UP, RIGHT_SIDE);
+			rotate(-15,LOW_SPEED, NULL);
+			moveOnDirection(170, LOW_SPEED, NULL);
+			liftMove(DOWN, RIGHT_SIDE);
+			_delay_ms(500);
+			rightDiafram(ACTIVATE);
+			_delay_ms(500);
+			
+		}else if(currentPosition == 10)
+		{
+			rotate(-100, LOW_SPEED, NULL);
+			moveOnDirection(380, LOW_SPEED, NULL);
+			rightDiafram(DEACTIVATE);
+			_delay_ms(5000);
+			moveOnDirection(-300, LOW_SPEED, NULL);
+			
+			while(1);
+		}
 			}//end for
 			break;
 		}

@@ -94,7 +94,7 @@ ISR(TIMER1_COMPA_vect)
 	systemTime++;
 }
 
-static unsigned char logFile = 0;
+//static unsigned char logFile = 0;
 
 /*void logger(const char *text, ...)
 {
@@ -125,35 +125,36 @@ static unsigned char logFile = 0;
 void systemInit(void)
 {
 	DDRG = 0xFF;
-	PORTG = 0;
+
 	
-	_delay_ms(700);
+	/*_delay_ms(700);
 	if(SD_Init(SPI_Init, SPI_ReadWrite, PB0, &PORTB) != -1)
 		FAT_Init();
-	_delay_ms(700);
+	_delay_ms(700);*/
 	
 	//logFile = FAT_OpenFile("LOG     ", 0);
 	//if(logFile <= 0)
-	logFile = FAT_CreateFile("LOG", 0);
+	//logFile = FAT_CreateFile("LOG", 0);
 	//logger("System init started.");
 	
 	Timer_Init(1000);
 	CAN_Init(4);
 	
 	//logger("Initializing digital inputs...\n\r");
-	//forwardUpperLeftSensor = GPIO_PinRegister(GPIOA_BASE, 4);//prednji gornji levi senzor za detekciju protivnika
-	//forwardUpperRightSensor = GPIO_PinRegister(GPIOB_BASE, 2); //prednji gornji desni senzor za detekciju protivnika
-	//forwardLowerLeftSensor = GPIO_PinRegister(GPIOA_BASE, 6);//prednji donji levi senzor za detekciju valjka
-	//forwardLowerRightSensor = GPIO_PinRegister(GPIOA_BASE, 7);//prednji levi levi senzor za detekciju valjka
-	//upperLiftSensor = GPIO_PinRegister(GPIOA_BASE, 3);//gornji senzor za detekciju pozicije lifta
-	//lowerLiftSensor = GPIO_PinRegister(GPIOA_BASE, 2);//donji senzor za detekciju pozicije lifta
-	//backwardLeftSensor = GPIO_PinRegister(GPIOB_BASE, 0);//zadnji senzor za detekciju protivnika
-	//backwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 0);//zadnji senzor za detekciju protivnika
+	forwardUpperLeftSensor = GPIO_PinRegister(GPIOA_BASE, 4);//prednji gornji levi senzor za detekciju protivnika
+	forwardUpperRightSensor = GPIO_PinRegister(GPIOA_BASE, 5); //prednji gornji desni senzor za detekciju protivnika
+	forwardLowerLeftSensor = GPIO_PinRegister(GPIOA_BASE, 6);//prednji donji levi senzor za detekciju valjka
+	forwardLowerRightSensor = GPIO_PinRegister(GPIOA_BASE, 7);//prednji levi levi senzor za detekciju valjka
+	upperLiftSensor = GPIO_PinRegister(GPIOA_BASE, 2);//gornji senzor za detekciju pozicije lifta
+	lowerLiftSensor = GPIO_PinRegister(GPIOA_BASE, 3);//donji senzor za detekciju pozicije lifta
+	backwardLeftSensor = GPIO_PinRegister(GPIOA_BASE, 1);//zadnji senzor za detekciju protivnika
+	backwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 0);//zadnji senzor za detekciju protivnika
 	//jumper = GPIO_PinRegister(GPIOE_BASE, 2);//jumper koji sluzi za startovanje robota
 	//sidesSwitch = GPIO_PinRegister(GPIOE_BASE, 3);//prekidac za menjanje strana
+	//sensor = GPIO_PinRegister(GPIOE_BASE, 2);
 	
 	//logger("Init done. Waiting for start jumper...\n\r");
-	while(jumperCheck() == 1);
+	//while(jumperCheck() == 1);
 	systemTime = 0;
 	
 	clapperboardsClapped = 0;
@@ -168,27 +169,7 @@ unsigned long getSystemTime(void)
 	return systemTime;
 }
 
-int jumperCheck(void)
-{
-	if (GPIO_PinRead(jumper) == 0)
-	{
-		return 0;
-	}
-	
-	return 1;
-}//END OF jumperCheck
-
-int sidesSwitchCheck(void)
-{
-	if (GPIO_PinRead(sidesSwitch) == 0)
-	{
-		return 0;
-	}
-	
-	return 1;
-}//END OF sidesSwitchCheck
-
-void SPI_Init(void)
+/*void SPI_Init(void)
 {
 	DDRB |= ((1 << PB2) | (1 << PB1) | (1 << PB0));
 	DDRB &= ~(1 << PB3);
@@ -205,22 +186,4 @@ unsigned char SPI_ReadWrite(unsigned char data)
 	PORTB |= (1 << PB0); // CS high
 
 	return SPDR;
-}
-
-int checkLiftSensor(signed char sensor)
-{
-	if(sensor == UP)
-	{
-		if(GPIO_PinRead(upperLiftSensor) == 1)
-		{
-			return 1;
-		}
-	}else
-	{
-		if(GPIO_PinRead(lowerLiftSensor) == 1)
-		{
-			return 2;
-		}
-	}
-	return 0;
-}//END OF checkLiftSensor
+}*/

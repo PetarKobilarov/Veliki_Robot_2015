@@ -160,11 +160,6 @@ signed char liftMove(signed char vertically, signed char side)
 		
 		liftStates(ACTIVATE);
 		
-		if(checkLiftSensor(UP) == 0)
-		{
-			return FAIL;
-		}
-		
 	}else 
 	{
 		liftStates(DEACTIVATE);
@@ -179,11 +174,6 @@ signed char liftMove(signed char vertically, signed char side)
 		{
 			rightDiafram(DEACTIVATE);
 			leftDiafram(DEACTIVATE);
-		}
-		
-		if(checkLiftSensor(DOWN) == 0)
-		{
-			return FAIL;
 		}
 		
 	}
