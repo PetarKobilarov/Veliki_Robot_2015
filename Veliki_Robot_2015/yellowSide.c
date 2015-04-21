@@ -175,18 +175,21 @@ void yellowSide(void)
 					_delay_ms(5000);
 					moveOnDirection(-200, LOW_SPEED, NULL);
 					rotate(-90, LOW_SPEED, releaseCup);
-					/*
-					moveOnDirection(50, LOW_SPEED, NULL);
+					_delay_ms(50);
+					
+					moveOnDirection(150, LOW_SPEED, NULL);
+					_delay_ms(100);
 					colectThePopcorn(RIGHT_SIDE, ACTIVATE);
-					moveOnDirection(-200, LOW_SPEED, NULL);
-					//treba zatcoriti
+					_delay_ms(100);
+					moveOnDirection(-530, LOW_SPEED, NULL);
+					//treba zatvoriti
 					
 					colectThePopcorn(LEFT_SIDE, ACTIVATE);
-					moveOnDirection(50, LOW_SPEED, NULL);
-					colectThePopcorn(LEFT_SIDE,DEACTIVATE);
+					moveOnDirection(100, LOW_SPEED, NULL);
+					colectThePopcorn(LEFT_SIDE, DEACTIVATE);
 					
-					rotate(360,NORMAL_SPEED,NULL);
-					*/
+					rotate(180,NORMAL_SPEED, NULL);
+					
 					while(1);
 				}
 				
