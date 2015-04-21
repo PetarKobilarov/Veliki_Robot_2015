@@ -71,8 +71,9 @@ const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 	{{420, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
 	{{900, 1800, 0}, LOW_SPEED, BACKWARD, NULL},//rusi prve dve nase klapne									//5
 	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//ide da ostavi kulu										//6
-	{{450, 1067, 0}, NORMAL_SPEED, FORWARD, NULL}//ostavlja casu											//7
-	
+	{{450, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//ostavlja casu											//7
+	{{800, 350, 0}, NORMAL_SPEED, FORWARD, NULL},
+	{{800, 100, 0}, NORMAL_SPEED, FORWARD, NULL}
 };
 
 
@@ -181,12 +182,8 @@ void yellowSide(void)
 					_delay_ms(100);
 					colectThePopcorn(RIGHT_SIDE, ACTIVATE);
 					_delay_ms(100);
-					moveOnDirection(-530, LOW_SPEED, NULL);
+					moveOnDirection(-250, LOW_SPEED, NULL);
 					//treba zatvoriti
-					
-					colectThePopcorn(LEFT_SIDE, ACTIVATE);
-					moveOnDirection(100, LOW_SPEED, NULL);
-					colectThePopcorn(LEFT_SIDE, DEACTIVATE);
 					
 					rotate(180,NORMAL_SPEED, NULL);
 					
