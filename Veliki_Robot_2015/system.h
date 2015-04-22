@@ -23,12 +23,15 @@ void Timer_Init(unsigned int freq);
 
 unsigned char forwardUpperLeftSensor, backwardLeftSensor, forwardUpperRightSensor, backwardRightSensor, forwardLowerLeftSensor, forwardLowerRightSensor, upperLiftSensor, forwardMiddleSensor, backwardMiddleSensor, lowerLiftSensor, jumper, sidesSwitch;
 unsigned char clapperboardsClapped, popcornColected, standColected;
-unsigned char sensor;
 
+unsigned long getSystemTime(void);
 void systemInit(void);
 int jumperCheck(void);
 int sidesSwitchCheck(void);
-unsigned long getSystemTime(void);
+int checkLiftSensor(signed char sensor);
+int checkFrontSensors(signed char sensor);
+int checkRearSensors(signed char sensor);
+
 
 //void logger(const char *text, ...);
 

@@ -146,15 +146,13 @@ void systemInit(void)
 	forwardLowerLeftSensor = GPIO_PinRegister(GPIOA_BASE, 0);//prednji donji levi senzor za detekciju valjka			//radi
 	forwardLowerRightSensor = GPIO_PinRegister(GPIOA_BASE, 1);//prednji levi levi senzor za detekciju valjka			//radi
 	forwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 0);//prednji srednji senzor za detekciju protivnika
-	upperLiftSensor = GPIO_PinRegister(GPIOA_BASE, 7);//gornji senzor za detekciju pozicije lifta
+	upperLiftSensor = GPIO_PinRegister(GPIOA_BASE, 7);//gornji senzor za detekciju pozicije lifta						//radi
 	lowerLiftSensor = GPIO_PinRegister(GPIOA_BASE, 6);//donji senzor za detekciju pozicije lifta						//radi
 	backwardLeftSensor = GPIO_PinRegister(GPIOA_BASE, 2);//zadnji senzor za detekciju protivnika						//radi
 	backwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 3);//zadnji senzor za detekciju protivnika						//radi
 	backwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 1);//zadnji srednji senzor za detekciju protivnika
-	//sensor = GPIO_PinRegister(GPIOB_BASE, 0);
 	//jumper = GPIO_PinRegister(GPIOE_BASE, 2);//jumper koji sluzi za startovanje robota
 	//sidesSwitch = GPIO_PinRegister(GPIOE_BASE, 3);//prekidac za menjanje strana
-	//sensor = GPIO_PinRegister(GPIOE_BASE, 2);
 	
 	//logger("Init done. Waiting for start jumper...\n\r");
 	//while(jumperCheck() == 1);
@@ -192,3 +190,47 @@ unsigned char SPI_ReadWrite(unsigned char data)
 
 	return SPDR;
 }*/
+
+int checkLiftSensor(signed char sensor)
+{
+	if(sensor == UP)
+	{
+		if(upperLiftSensor == 1)
+		{
+			return SUCCESS;
+		}
+	}else if(sensor == DOWN)
+	{
+		if(lowerLiftSensor == 1)
+		{
+			return SUCCESS;
+		}
+	}
+	
+	return FAIL;
+	
+}//END OF checkLiftSensor
+
+int checkFrontSensors(signed char sensor)
+{
+	if(sensor == RIGHT_SIDE)
+	{
+		if(forwardUpperRightSensor == 1)
+		{
+			
+		}
+		
+	}else if(sensor == LEFT_SIDE)
+	{
+		if(forwardUpperLeftSensor)
+		{
+		}
+		
+	}else if(sensor == MIDDLE)
+	{
+		
+	}else if(sensor == ALL)
+	{
+		
+	}
+}

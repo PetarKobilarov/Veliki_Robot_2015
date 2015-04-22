@@ -6,6 +6,8 @@
 #define RIGHT_SIDE	1
 #define LEFT_SIDE	-1
 #define BOTH		2
+#define MIDDLE		-2
+#define ALL			3
 
 #define ACTIVATE	1
 #define DEACTIVATE	-1

@@ -17,7 +17,7 @@ greenSide.d greenSide.o: .././greenSide.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\stdlib.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h \
  .././system.h .././odometry.h .././can.h .././sides.h .././usart.h \
- .././fat.h
+ .././actuators.h .././fat.h
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -62,5 +62,7 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 .././sides.h:
 
 .././usart.h:
+
+.././actuators.h:
 
 .././fat.h:
