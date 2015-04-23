@@ -94,9 +94,9 @@ const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 	{{1200, 1520, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka									//2
 	{{1030, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
 	{{430, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
-	{{900, 1800, 0}, LOW_SPEED, BACKWARD, knockDownTheClapperboards},//rusi prve dve nase klapne									//5
+	{{900, 1800, 0}, LOW_SPEED, BACKWARD, knockDownTheClapperboards},//rusi prve dve nase klapne			//5
 	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, correctRightStand},//ide da ostavi kulu							//6
-	{{450, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//ostavlja casu											//7
+	{{450, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//ostavlja kulu i casu									//7
 	{{700, 380, 0}, NORMAL_SPEED, FORWARD, NULL}, //hvata 2 valjka kod podijuma								//8
 	{{300, 400, 0}, NORMAL_SPEED, FORWARD, releaseRightStand},//hvata poslednji valjak						//9
 	{{600, 500, 0}, NORMAL_SPEED, BACKWARD, NULL}//ostavlja drugu kulu  									//10
@@ -147,8 +147,6 @@ void yellowSide(void)
 				}
 				else if(currentPosition == 1)
 				{
-					liftMove(DOWN, LEFT_SIDE);
-					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
 					
 				}else if(currentPosition == 2)

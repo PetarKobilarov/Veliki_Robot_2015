@@ -13,17 +13,23 @@
 int main(void)
 {
 	systemInit();
+	_delay_ms(100);
 	
+	//PORT.F4
 	while(1)
-		{
-			if(sidesSwitchCheck() == 1)
+		{	
+			if(PORTF4 == 1)
 			{
+				//_delay_ms(500);
 				yellowSide();
 			}else
 			{
+				//_delay_ms(500);
 				greenSide();
 			}
 			
+			
+			//greenSide();
 		}//END OF while(1)
 			
 }
