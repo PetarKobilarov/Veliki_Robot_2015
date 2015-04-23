@@ -11,7 +11,7 @@ typedef struct
 	position point;
 	unsigned char speed;
 	signed char direction;
-	char (*detectionCallback)(void);
+	char (*detectionCallback)(unsigned long startTime);
 }gotoFields;
 
 void yellowSide(void);

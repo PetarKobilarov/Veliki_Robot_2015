@@ -18,6 +18,7 @@ unsigned char GPIO_ReadFromRegister(unsigned char pinHandler);
 void fillDebaunsingData(void);
 
 void Timer_Init(unsigned int freq);
+void Timer2_init(void);
 //void SPI_Init(void);
 //unsigned char SPI_ReadWrite(unsigned char data);
 
@@ -26,11 +27,14 @@ unsigned char clapperboardsClapped, popcornColected, standColected;
 
 unsigned long getSystemTime(void);
 void systemInit(void);
-int jumperCheck(void);
-int sidesSwitchCheck(void);
-int checkLiftSensor(signed char sensor);
-int checkFrontSensors(signed char sensor);
-int checkRearSensors(signed char sensor);
+
+//Funkcije za proveru senzora, jumpera i prekidaca
+signed char jumperCheck(void);
+signed char sidesSwitchCheck(void);
+signed char checkLiftSensor(signed char sensor);
+signed char checkFrontSensors(signed char sensor);
+signed char checkRearSensors(signed char sensor);
+signed char checkForStands(signed char sensor); 
 
 
 //void logger(const char *text, ...);

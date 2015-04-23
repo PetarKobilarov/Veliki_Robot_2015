@@ -3,22 +3,26 @@
 
 #include "can.h"
 
-#define RIGHT_SIDE	1
-#define LEFT_SIDE	-1
-#define BOTH		2
-#define MIDDLE		-2
-#define ALL			3
+#define RIGHT_SIDE		1
+#define LEFT_SIDE		-1
+#define BOTH			2
+#define MIDDLE			-2
+#define ALL				3
 
-#define ACTIVATE	1
-#define DEACTIVATE	-1
-#define CLOSE		2
+#define ACTIVATE		1
+#define DEACTIVATE		-1
+#define CLOSE			2
 
-#define UP			1
-#define DOWN		-1
+#define UP				1
+#define DOWN			-1
 
-#define SUCCESS		1
-#define FAIL		-1
+#define SUCCESS			1
+#define FAIL			-1
 
+#define DETECTED		1
+#define NOT_DETECTED	0
+
+//Funkcije koje komuniciraju sa aktuatorskom plocom
 void knockDownTheClapperboards(signed char side, signed char state);
 void colectThePopcorn(signed char side, signed char state);
 void leftDiafram(signed char state);
@@ -26,9 +30,11 @@ void rightDiafram(signed char state);
 void liftStates(signed char state);
 signed char liftMove(signed char vertically, signed char side);
 
+//Funkcije za inicijalizaciju i pokretanje servoa
 void servo_init(unsigned int f_pwm);
 void servo_position1(unsigned char dutyCycle);
 void servo_position2(unsigned char dutyCycle);
 void servo_position3(unsigned char dutyCycle);
+void theDoors(signed char side, signed char state);
 
 #endif

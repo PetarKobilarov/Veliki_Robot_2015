@@ -85,6 +85,11 @@ void Timer_Init(unsigned int freq)
 	SREG |= 0x80;
 }
 
+/*void Timer2_init(void)
+{
+	TCCR0A = (1 << WGM01) | 
+}*/
+
 ISR(TIMER1_COMPA_vect)
 {
 	fillDebaunsingData();
@@ -126,7 +131,6 @@ void systemInit(void)
 {
 	DDRG = 0xFF;
 
-	
 	/*_delay_ms(700);
 	if(SD_Init(SPI_Init, SPI_ReadWrite, PB0, &PORTB) != -1)
 		FAT_Init();
@@ -145,17 +149,17 @@ void systemInit(void)
 	forwardUpperRightSensor = GPIO_PinRegister(GPIOA_BASE, 5); //prednji gornji desni senzor za detekciju protivnika	//radi
 	forwardLowerLeftSensor = GPIO_PinRegister(GPIOA_BASE, 0);//prednji donji levi senzor za detekciju valjka			//radi
 	forwardLowerRightSensor = GPIO_PinRegister(GPIOA_BASE, 1);//prednji levi levi senzor za detekciju valjka			//radi
-	forwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 0);//prednji srednji senzor za detekciju protivnika
+	forwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 0);//prednji srednji senzor za detekciju protivnika				//radi
 	upperLiftSensor = GPIO_PinRegister(GPIOA_BASE, 7);//gornji senzor za detekciju pozicije lifta						//radi
 	lowerLiftSensor = GPIO_PinRegister(GPIOA_BASE, 6);//donji senzor za detekciju pozicije lifta						//radi
 	backwardLeftSensor = GPIO_PinRegister(GPIOA_BASE, 2);//zadnji senzor za detekciju protivnika						//radi
 	backwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 3);//zadnji senzor za detekciju protivnika						//radi
-	backwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 1);//zadnji srednji senzor za detekciju protivnika
-	//jumper = GPIO_PinRegister(GPIOE_BASE, 2);//jumper koji sluzi za startovanje robota
-	//sidesSwitch = GPIO_PinRegister(GPIOE_BASE, 3);//prekidac za menjanje strana
+	backwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 1);//zadnji srednji senzor za detekciju protivnika				//radi
+	jumper = GPIO_PinRegister(GPIOF_BASE, 2);//jumper koji sluzi za startovanje robota									//radi
+	sidesSwitch = GPIO_PinRegister(GPIOF_BASE, 4);//prekidac za menjanje strana											//ne radi
 	
 	//logger("Init done. Waiting for start jumper...\n\r");
-	//while(jumperCheck() == 1);
+	while(jumperCheck() == 1);
 	systemTime = 0;
 	
 	servo_init(100);
@@ -191,7 +195,7 @@ unsigned char SPI_ReadWrite(unsigned char data)
 	return SPDR;
 }*/
 
-int checkLiftSensor(signed char sensor)
+signed char checkLiftSensor(signed char sensor)
 {
 	if(sensor == UP)
 	{
@@ -211,26 +215,127 @@ int checkLiftSensor(signed char sensor)
 	
 }//END OF checkLiftSensor
 
-int checkFrontSensors(signed char sensor)
+//Funkcija za detektovanje protivnika sa prednje strane
+//Prosledjuje se sa koje strane senzor treba aktivirati 
+//Moduci su levi, desni, srednji ili svi
+//Prosledjuje se LEFT_SIDE, RIGHT_SIDE, MIDDLE i ALL
+signed char checkFrontSensors(signed char sensor)
 {
 	if(sensor == RIGHT_SIDE)
 	{
-		if(forwardUpperRightSensor == 1)
+		if(GPIO_PinRead(forwardUpperRightSensor) == 1)
 		{
-			
+			return DETECTED;
 		}
 		
 	}else if(sensor == LEFT_SIDE)
 	{
-		if(forwardUpperLeftSensor)
+		if(GPIO_PinRead(forwardUpperLeftSensor) == 1)
 		{
+			return DETECTED;
 		}
 		
 	}else if(sensor == MIDDLE)
 	{
-		
+		if(GPIO_PinRead(forwardMiddleSensor) == 0)
+		{
+			return DETECTED;
+		}
 	}else if(sensor == ALL)
 	{
+		if((GPIO_PinRead(forwardUpperRightSensor) == 1) || (GPIO_PinRead(forwardUpperLeftSensor) == 1) || (GPIO_PinRead(forwardMiddleSensor) == 0))
+		{
+			return DETECTED;	
+		}
 		
 	}
+	
+	return NOT_DETECTED;
+}//END OF checkFrontSensors
+
+//Funkcija za detektovanje protivnika sa zadnje strane
+//Prosledjuje se sa koje strane senzor treba aktivirati
+//Moduci su levi, desni, srednji ili svi
+//Prosledjuje se LEFT_SIDE, RIGHT_SIDE, MIDDLE i ALL
+signed char checkRearSensors(signed char sensor)
+{
+	if(sensor == RIGHT_SIDE)
+	{
+		if(GPIO_PinRead(backwardRightSensor) == 1)
+		{
+			return DETECTED;
+		}
+		
+	}else if(sensor == LEFT_SIDE)
+	{
+		if(GPIO_PinRead(backwardLeftSensor) == 1)
+		{
+			return DETECTED;
+		}
+		
+	}else if(sensor == MIDDLE)
+	{
+		if(GPIO_PinRead(backwardMiddleSensor) == 0)
+		{
+			return DETECTED;
+		}
+	}else if(sensor == ALL)
+	{
+		if((GPIO_PinRead(backwardRightSensor) == 1) || (GPIO_PinRead(backwardLeftSensor) == 1) || (GPIO_PinRead(backwardMiddleSensor) == 0))
+		{
+			return DETECTED;
+		}
+		
+	}
+	
+	return NOT_DETECTED;
+}//END OF checkRearSensors
+
+//Funkcija za detektovanje valjaka
+//Prosledjuje se sa koje strane senzor treba aktivirati
+//Moguci su levi, desni ili oba
+//Prosledjuje se LEFT_SIDE, RIGHT_SIDE ili ALL
+signed char checkForStands(signed char sensor)
+{
+	if(sensor == RIGHT_SIDE)
+	{
+		if(GPIO_PinRead(forwardLowerRightSensor) == 1)
+		{
+			return DETECTED;
+		}
+	}else if(sensor == LEFT_SIDE)
+	{
+		if(GPIO_PinRead(forwardLowerLeftSensor) == 1)
+		{
+			return DETECTED;
+		}
+	}else if(sensor == ALL)
+	{
+		if((GPIO_PinRead(forwardLowerRightSensor) == 1) || (GPIO_PinRead(forwardLowerLeftSensor) == 1))
+		{
+			return DETECTED;
+		}
+	}
+	
+	return NOT_DETECTED;
+}//END OF checkForStands
+
+signed char jumperCheck(void)
+{
+	if(GPIO_PinRead(jumper) == 0)
+	{
+		return 1;
+	}
+	
+	return 0;
+}
+
+signed char sidesSwitchCheck(void)
+{
+	if(GPIO_PinRead(sidesSwitch) == 0)
+	{
+		return 1;
+	}
+	
+	return 0;
 }

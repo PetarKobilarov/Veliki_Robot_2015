@@ -16,8 +16,13 @@ int main(void)
 	
 	while(1)
 		{
-			greenSide();
-			//yellowSide();
+			if(sidesSwitchCheck() == 1)
+			{
+				yellowSide();
+			}else
+			{
+				greenSide();
+			}
 			
 		}//END OF while(1)
 			

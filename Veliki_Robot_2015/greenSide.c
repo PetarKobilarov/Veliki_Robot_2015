@@ -33,8 +33,9 @@ char releaseLeftStand(unsigned long startTime)
 	{
 		leftDiafram(DEACTIVATE);
 		standColected = 1;
-		return 0;
 	}
+	
+	return 0;
 }
 
 char releaseCupGreen(unsigned long startTime)
@@ -231,7 +232,7 @@ void greenSide(void)
 					rotate(-180,NORMAL_SPEED, NULL);
 				}else if(currentPosition == 8)
 				{
-					_liftMove(DOWN, LEFT_SIDE);
+					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
 					_delay_ms(500);
@@ -244,7 +245,7 @@ void greenSide(void)
 				}else if(currentPosition == 9)
 				{
 					liftMove(UP, LEFT_SIDE);
-					rotate(15,LOW_SPEED, NULL);
+					rotate(-15,LOW_SPEED, NULL);
 					moveOnDirection(170, LOW_SPEED, NULL);
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);

@@ -16,8 +16,9 @@ char correctRightStand(unsigned long startTime)
 	{
 		liftMove(DOWN, RIGHT_SIDE);
 		standColected = 1;
-		return 0;
 	}
+	
+	return 0;
 }
 
 char releaseRightStand(unsigned long startTime)
@@ -27,8 +28,9 @@ char releaseRightStand(unsigned long startTime)
 	{
 		rightDiafram(DEACTIVATE);
 		standColected = 1;
-		return 0;
 	}
+	
+	return 0;
 }
 
 char releaseCup(unsigned long startTime)

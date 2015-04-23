@@ -208,18 +208,53 @@ void servo_init(unsigned int f_pwm)
 
 void servo_position1(unsigned char dutyCycle)
 {
+	if((dutyCycle < 65) || (dutyCycle > 175))
+	{
+		dutyCycle = 150;
+	}
 	OCR3A = ((double)ICR3 / 255) * dutyCycle + 0.5;
 	
 }//END OF servo_position
 
 void servo_position2(unsigned char dutyCycle)
 {
-	OCR3B = ((double)ICR3 / 255) * dutyCycle + 0.5;
+	if((dutyCycle < 110) || (dutyCycle >220))
+	{
+		dutyCycle = 160;
+	}
+		OCR3B = ((double)ICR3 / 255) * dutyCycle + 0.5;
 	
 }//END OF servo_position
 
-void servo_position3(unsigned char dutyCycle)
+//levi servo skroz otvoren 220
+//levi servo skroz zatvoren 110
+//levi servo je servo_position2
+//levi servo je pinE4
+
+//desni servo skeoz otvoren 65
+//desni servo skroz zatvoren 175
+//desni servo je servo_position1
+//desni servo je pinE3
+void theDoors(signed char side, signed char state)
 {
-	OCR3C = ((double)ICR3 / 255) * dutyCycle + 0.5;
-	
-}//END OF servo_position
+	if(side == RIGHT_SIDE)
+	{
+		if(state == ACTIVATE)
+		{
+			servo_position1(175);
+		}else
+		{
+			servo_position1(65);
+		}
+		
+	}else
+	{
+		if(state == ACTIVATE)
+		{
+			servo_position2(110);
+		}else
+		{
+			servo_position2(220);
+		}
+	}
+}//END OF theDoors
