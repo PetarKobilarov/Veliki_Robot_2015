@@ -85,10 +85,23 @@ void Timer_Init(unsigned int freq)
 	SREG |= 0x80;
 }
 
-/*void Timer2_init(void)
+void Timer_0_Init(void)
 {
-	TCCR0A = (1 << WGM01) | 
-}*/
+	TCCR0A |= (1 << WGM01) | (0 << WGM00) | (1 << COMA1) | (0 << COMA0) | (1 << CS02) | (0 << CS01) | (1 << CS00);//preskaler 1024
+	OCR0A = 878906;
+	TIMSK0 = 1 << OCIE0A;
+	
+	TCNT0 = 0;
+}
+
+ISR(TIMER0_COMP_vect)
+{
+	if (TCNT0 >= OCR0A)
+	{
+		PORTG = 0xFF;
+	}
+		
+}
 
 ISR(TIMER1_COMPA_vect)
 {
@@ -149,18 +162,21 @@ void systemInit(void)
 	forwardUpperRightSensor = GPIO_PinRegister(GPIOA_BASE, 5); //prednji gornji desni senzor za detekciju protivnika	//radi
 	forwardLowerLeftSensor = GPIO_PinRegister(GPIOA_BASE, 0);//prednji donji levi senzor za detekciju valjka			//radi
 	forwardLowerRightSensor = GPIO_PinRegister(GPIOA_BASE, 1);//prednji levi levi senzor za detekciju valjka			//radi
-	forwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 0);//prednji srednji senzor za detekciju protivnika				//radi
+	forwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 1);//prednji srednji senzor za detekciju protivnika				//radi
 	upperLiftSensor = GPIO_PinRegister(GPIOA_BASE, 7);//gornji senzor za detekciju pozicije lifta						//radi
 	lowerLiftSensor = GPIO_PinRegister(GPIOA_BASE, 6);//donji senzor za detekciju pozicije lifta						//radi
 	backwardLeftSensor = GPIO_PinRegister(GPIOA_BASE, 2);//zadnji senzor za detekciju protivnika						//radi
 	backwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 3);//zadnji senzor za detekciju protivnika						//radi
-	backwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 1);//zadnji srednji senzor za detekciju protivnika				//radi
+	backwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 0);//zadnji srednji senzor za detekciju protivnika				//radi
 	jumper = GPIO_PinRegister(GPIOF_BASE, 2);//jumper koji sluzi za startovanje robota									//radi
 	sidesSwitch = GPIO_PinRegister(GPIOF_BASE, 4);//prekidac za menjanje strana											//ne radi
+	
 	
 	//logger("Init done. Waiting for start jumper...\n\r");
 	while(jumperCheck() == 1);
 	systemTime = 0;
+	
+	Timer_0_Init();
 	
 	servo_init(100);
 	

@@ -18,12 +18,14 @@ unsigned char GPIO_ReadFromRegister(unsigned char pinHandler);
 void fillDebaunsingData(void);
 
 void Timer_Init(unsigned int freq);
-void Timer2_init(void);
+void Timer_0_Init(void);
 //void SPI_Init(void);
 //unsigned char SPI_ReadWrite(unsigned char data);
 
 unsigned char forwardUpperLeftSensor, backwardLeftSensor, forwardUpperRightSensor, backwardRightSensor, forwardLowerLeftSensor, forwardLowerRightSensor, upperLiftSensor, forwardMiddleSensor, backwardMiddleSensor, lowerLiftSensor, jumper, sidesSwitch;
 unsigned char clapperboardsClapped, popcornColected, standColected;
+
+unsigned char sensor;
 
 unsigned long getSystemTime(void);
 void systemInit(void);
