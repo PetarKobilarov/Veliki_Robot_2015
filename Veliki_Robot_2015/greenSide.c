@@ -11,6 +11,77 @@
 
 position compare;
 
+char sensorDetectionCollbackPosition0(unsigned long startTime) {
+	if(checkFrontSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+		return 1;
+	}
+	return 0;
+}
+
+char sensorDetectionCollbackPosition1(unsigned long startTime) {
+	if(checkFrontSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+		return 1;
+	}
+	return 0;
+}
+
+char sensorDetectionCollbackPosition2(unsigned long startTime) {
+	if(checkFrontSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+		return 1;
+	}
+	return 0;
+}
+
+char sensorDetectionCollbackPosition3(unsigned long startTime) {
+	if(checkFrontSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+		return 1;
+	}
+	return 0;
+}
+
+char sensorDetectionCollbackPosition4(unsigned long startTime) {
+	if((checkFrontSensors(RIGHT_SIDE) == DETECTED) || (checkFrontSensors(MIDDLE) == DETECTED)) {
+		stop(SOFT_STOP);
+		return 1;
+	}
+	return 0;
+}
+	
+char sensorDetectionCollbackPosition6(unsigned long startTime) {
+	if(checkFrontSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+	}
+	return 0;
+}
+
+char sensorDetectionCollbackPosition7(unsigned long startTime) {
+	if(checkRearSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+		return 1;
+	}
+	return 0;
+}
+
+char sensorDetectionCollbackPosition8(unsigned long startTime) {
+	if(checkFrontSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+		return 1;
+	}
+	return 0;
+}
+
+char sensorDetectionCollbackPosition10(unsigned long startTime) {
+	if(checkFrontSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+		return 1;
+	}
+	return 0;
+}
+
 char correctLeftStand(unsigned long startTime)
 {
 	standColected = 0;
@@ -28,6 +99,12 @@ char correctLeftStand(unsigned long startTime)
 
 char releaseLeftStand(unsigned long startTime)
 {
+	if(checkFrontSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+		currentPosition -= 1;
+		_delay_ms(5000);
+	}
+	
 	standColected = 0;
 	if(standColected == 0)
 	{
@@ -46,6 +123,12 @@ char releaseCupGreen(unsigned long startTime)
 
 char clapperboardsKnockDownGreenSide(unsigned long startTime)
 {
+	if(checkRearSensors(ALL) == DETECTED) {
+		stop(SOFT_STOP);
+		currentPosition -= 1;
+		_delay_ms(5000);
+	}
+	
 	if(clapperboardsClapped == 0)
 	{
 		_delay_ms(700);
@@ -92,17 +175,17 @@ char popcornColectionGreenSide(unsigned long startTime)
 *************************************************************************************************************************************************************************************/
 const gotoFields greenSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
-	{{550, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},							//izlazi iz startnog polja			0
-	{{780, 550, 0}, NORMAL_SPEED, FORWARD, NULL},							//ide na poziciju prvog valjka		1
-	{{1250, 590, 0}, NORMAL_SPEED, FORWARD, NULL},							//ide do drugog valjka				2
-	{{960, 290, 0}, NORMAL_SPEED, FORWARD, NULL},							//ide do treceg valjka				3
-	{{420, 290, 0}, NORMAL_SPEED, FORWARD, NULL},							//ide do prve case koju kupi		4
-	{{950, 280, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownGreenSide},	//rusi prve dve nase klapne			5
-	{{550, 1030, 0}, NORMAL_SPEED, FORWARD, NULL},				//ide da ostavi kulu				6
-	{{450, 1030, 0}, NORMAL_SPEED, FORWARD, NULL},							//ostavlja casu						7
-	{{550, 1620, 0}, NORMAL_SPEED, FORWARD, NULL},							//hvata 2 valjka kod podijuma		8
-	{{250, 1600, 0}, NORMAL_SPEED, FORWARD, releaseLeftStand},				//hvata poslednji valjak			9
-	{{550, 1500, 0}, NORMAL_SPEED, BACKWARD, NULL}							//ostavlja drugu kulu  				10
+	{{550, 1067, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition0},							//izlazi iz startnog polja			0
+	{{780, 550, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition1},							//ide na poziciju prvog valjka		1
+	{{1250, 590, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition2},							//ide do drugog valjka				2
+	{{960, 290, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition3},							//ide do treceg valjka				3
+	{{420, 290, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition4},							//ide do prve case koju kupi		4
+	{{950, 280, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownGreenSide},								//rusi prve dve nase klapne			5
+	{{500, 1020, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition6},							//ide da ostavi kulu				6
+	{{400, 1020, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition7},							//ostavlja kulu i casu				7
+	{{660, 1730, 0}, LOW_SPEED, FORWARD, sensorDetectionCollbackPosition8},								//hvata 2 valjka kod podijuma		8
+	{{240, 1690, 0}, NORMAL_SPEED, FORWARD, releaseLeftStand},											//hvata poslednji valjak			9
+	{{600, 1500, 0}, NORMAL_SPEED, BACKWARD, sensorDetectionCollbackPosition10}							//ostavlja drugu kulu  				10
 };
 
 /*************************************************************************************************************************************************************************************
@@ -215,7 +298,7 @@ void greenSide(void)
 				{
 					rightDiafram(DEACTIVATE); //ostavlja toranj
 					_delay_ms(5000);
-					moveOnDirection(-200, LOW_SPEED, NULL);
+					moveOnDirection(-220, NORMAL_SPEED, NULL);
 					liftMove(UP, LEFT_SIDE);
 					rotate(90, LOW_SPEED, releaseCupGreen);
 					_delay_ms(50);
@@ -225,27 +308,27 @@ void greenSide(void)
 					colectThePopcorn(LEFT_SIDE, ACTIVATE); //Ostavlja casu
 					_delay_ms(100);
 					moveOnDirection(-230, NORMAL_SPEED, NULL);
-					colectThePopcorn(LEFT_SIDE,CLOSE);
+					colectThePopcorn(LEFT_SIDE,CLOSE);//ne zatvori lepo
 					
 					liftMove(UP, LEFT_SIDE);
 					
 					rotate(-180,NORMAL_SPEED, NULL);
-				}else if(currentPosition == 8)
+				}else if(currentPosition == 8) //kupi 2 valjka gore desno 
 				{
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
 					_delay_ms(500);
-					moveOnDirection(70, LOW_SPEED, NULL);
+					moveOnDirection(90, LOW_SPEED, NULL);
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					leftDiafram(ACTIVATE);
 					_delay_ms(500);
-					moveOnDirection(-290, NORMAL_SPEED, NULL);	
-				}else if(currentPosition == 9)
+					moveOnDirection(-310, NORMAL_SPEED, NULL);	
+				}else if(currentPosition == 9) //hvata poslednji valjak
 				{
 					liftMove(UP, LEFT_SIDE);
-					rotate(-15,LOW_SPEED, NULL);
+					rotate(15,LOW_SPEED, NULL);
 					moveOnDirection(170, LOW_SPEED, NULL);
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
