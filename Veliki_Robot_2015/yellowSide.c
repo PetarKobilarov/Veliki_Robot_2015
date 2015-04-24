@@ -9,8 +9,48 @@
 #include "actuators.h"
 #include "fat.h"
 
+char yellowDefaultFrontDetectionCallback(unsigned long startTime)
+{
+	if(checkFrontSensors(ALL) == DETECTED)
+	{
+		PORTG = 0xff;
+		stop(HARD_STOP);
+		return 1;
+	}
+	PORTG = 0;
+	return 0;
+}
+
+char yellowDefaultRearDetectionCallback(unsigned long StartTime)
+{
+	if(checkRearSensors(ALL) == DETECTED)
+	{
+		PORTG = 0xff;
+		stop(HARD_STOP);
+		return 1;
+	}
+	PORTG = 0;
+	return 0;
+}
+
+char yellowDetectionCallbackFrontMiddle(unsigned long StartTime)
+{
+	if(checkFrontSensors(MIDDLE) == DETECTED)
+	{
+		PORTG = 0xff;
+		stop(HARD_STOP);
+		return 1;
+	}
+	PORTG = 0;
+	return 0;
+	
+}
+
 char correctRightStand(unsigned long startTime)
 {
+	
+	yellowDefaultFrontDetectionCallback;
+		
 	standColected = 0;
 	if(standColected == 0)
 	{
@@ -23,6 +63,11 @@ char correctRightStand(unsigned long startTime)
 
 char releaseRightStand(unsigned long startTime)
 {
+	if(checkFrontSensors(ALL) == DETECTED) {
+		stop(HARD_STOP);
+		
+	}
+	
 	standColected = 0;
 	if(standColected == 0)
 	{
@@ -89,17 +134,17 @@ char popcornColectionYellowSide(unsigned long startTime)
 const gotoFields yellowSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
 	//gotoXY({x,y,angle},speed,direction,callback)
-	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//izlazi iz startnog polja								//0
-	{{730, 1450, 0}, NORMAL_SPEED, FORWARD, NULL},//ide na poziciju prvog valjka							//1
-	{{1200, 1520, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do drugog valjka									//2
-	{{1030, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do treceg valjka									//3
-	{{430, 1710, 0}, NORMAL_SPEED, FORWARD, NULL},//ide do prve case koju kupi								//4
-	{{900, 1800, 0}, LOW_SPEED, BACKWARD, knockDownTheClapperboards},//rusi prve dve nase klapne			//5
-	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, correctRightStand},//ide da ostavi kulu							//6
-	{{450, 1067, 0}, NORMAL_SPEED, FORWARD, NULL},//ostavlja kulu i casu									//7
-	{{700, 380, 0}, NORMAL_SPEED, FORWARD, NULL}, //hvata 2 valjka kod podijuma								//8
-	{{300, 400, 0}, NORMAL_SPEED, FORWARD, releaseRightStand},//hvata poslednji valjak						//9
-	{{600, 500, 0}, NORMAL_SPEED, BACKWARD, NULL}//ostavlja drugu kulu  									//10
+	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, yellowDefaultFrontDetectionCallback},	//izlazi iz startnog polja		//0 u
+	{{730, 1450, 0}, NORMAL_SPEED, FORWARD, yellowDefaultFrontDetectionCallback},	//ide na poziciju prvog valjka	//1 u
+	{{1200, 1520, 0}, NORMAL_SPEED, FORWARD, yellowDefaultFrontDetectionCallback},	//ide do drugog valjka			//2 u
+	{{1030, 1710, 0}, NORMAL_SPEED, FORWARD, yellowDefaultFrontDetectionCallback},	//ide do treceg valjka			//3 u
+	{{430, 1710, 0}, NORMAL_SPEED, FORWARD, yellowDetectionCallbackFrontMiddle},	//ide do prve case koju kupi	//4 u
+	{{900, 1800, 0}, LOW_SPEED, BACKWARD, knockDownTheClapperboards},				//rusi prve dve nase klapne		//5 //nije uradjeno 
+	{{500, 1067, 0}, NORMAL_SPEED, FORWARD, correctRightStand},						//ide da ostavi kulu			//6 u
+	{{450, 1067, 0}, NORMAL_SPEED, FORWARD, yellowDefaultFrontDetectionCallback},	//ostavlja kulu i casu			//7 u
+	{{700, 380, 0}, NORMAL_SPEED, FORWARD, yellowDefaultFrontDetectionCallback},	//hvata 2 valjka kod podijuma	//8 u
+	{{300, 400, 0}, NORMAL_SPEED, FORWARD, releaseRightStand},						//hvata poslednji valjak		//9 u
+	{{600, 500, 0}, NORMAL_SPEED, BACKWARD, yellowDefaultRearDetectionCallback}		//ostavlja drugu kulu  			//10 u
 };
 
 

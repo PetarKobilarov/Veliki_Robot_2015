@@ -11,7 +11,7 @@
 
 position positinDetected, compare;
 
-char defaultFrontDetectionCallback(unsigned long startTime)
+char greenDefaultFrontDetectionCallback(unsigned long startTime)
 {
 	if(checkFrontSensors(ALL) == DETECTED)
 	{
@@ -23,7 +23,7 @@ char defaultFrontDetectionCallback(unsigned long startTime)
 	return 0;
 }
 
-char defaultRearDetectionCallback(unsigned long StartTime)
+char greenDefaultRearDetectionCallback(unsigned long StartTime)
 {
 	if(checkRearSensors(ALL) == DETECTED)
 	{
@@ -35,7 +35,7 @@ char defaultRearDetectionCallback(unsigned long StartTime)
 	return 0;
 }
 
-char detectionCallbackFrontMiddle(unsigned long StartTime)
+char greenDetectionCallbackFrontMiddle(unsigned long StartTime)
 {
 	if(checkFrontSensors(MIDDLE) == DETECTED)
 	{
@@ -138,19 +138,19 @@ char popcornColectionGreenSide(unsigned long startTime)
 *************************************************************************************************************************************************************************************/
 const gotoFields greenSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
-	{{550, 1067, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//izlazi iz startnog polja			0
-	{{780, 550, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide na poziciju prvog valjka		1
-	{{1250, 590, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide do drugog valjka				2
-	{{960, 320, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide do treceg valjka				3
-	{{420, 290, 0}, NORMAL_SPEED, FORWARD, detectionCallbackFrontMiddle},							//ide do prve case koju kupi		4
-	{{950, 280, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownGreenSide},							//rusi prve dve nase klapne			5
-	{{500, 1020, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide da ostavi kulu				6
-	{{400, 1020, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ostavlja kulu i casu				7
-	{{660, 1730, 0}, LOW_SPEED, FORWARD, defaultFrontDetectionCallback},							//hvata 2 valjka kod podijuma		8
-	{{240, 1690, 0}, NORMAL_SPEED, FORWARD, releaseLeftStand},										//hvata poslednji valjak			9
-	{{600, 1500, 0}, NORMAL_SPEED, BACKWARD, defaultRearDetectionCallback},							//ostavlja drugu kulu  				10
-	{{1550, 350, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide do zajednickog prostora		11
-	{{1950, 350, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback}							//nosi protivnicku kulu				12
+	{{550, 1067, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback},		//izlazi iz startnog polja		0
+	{{780, 550, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback},			//ide na poziciju prvog valjka	1
+	{{1250, 590, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback},		//ide do drugog valjka			2
+	{{960, 320, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback},			//ide do treceg valjka			3
+	{{420, 330, 0}, NORMAL_SPEED, FORWARD, greenDetectionCallbackFrontMiddle},			//ide do prve case koju kupi	4
+	{{950, 280, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownGreenSide},				//rusi prve dve nase klapne		5
+	{{500, 1020, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback},		//ide da ostavi kulu			6
+	{{400, 1020, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback},		//ostavlja kulu i casu			7
+	{{660, 1730, 0}, LOW_SPEED, FORWARD, greenDefaultFrontDetectionCallback},			//hvata 2 valjka kod podijuma	8
+	{{240, 1710, 0}, NORMAL_SPEED, FORWARD, releaseLeftStand},							//hvata poslednji valjak		9
+	{{600, 1500, 0}, NORMAL_SPEED, BACKWARD, greenDefaultRearDetectionCallback},		//ostavlja drugu kulu  			10
+	{{1550, 350, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback},		//ide do zajednickog prostora	11
+	{{1950, 350, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback}			//nosi protivnicku kulu			12
 };
 
 /*************************************************************************************************************************************************************************************
@@ -378,8 +378,10 @@ void greenSide(void)
 					liftMove(UP, RIGHT_SIDE);
 					
 					//kupi prvu casu
+					moveOnDirection(-10, LOW_SPEED, NULL);
 					rotateFor(90, LOW_SPEED, popcornColectionGreenSide);
-					moveOnDirection(60, LOW_SPEED, NULL);
+					_delay_ms(500);
+					moveOnDirection(60, LOW_SPEED, NULL);//50
 					colectThePopcorn(LEFT_SIDE, DEACTIVATE);
 					moveOnDirection(-100, LOW_SPEED, NULL);
 					rotateFor(-100, LOW_SPEED, NULL);
@@ -389,13 +391,13 @@ void greenSide(void)
 					compare.y -= 25;
 					gotoXY(compare, LOW_SPEED, BACKWARD, NULL);
 					_delay_ms(50);
-					rotateFor(25, LOW_SPEED, NULL);
+					rotateFor(30, LOW_SPEED, NULL);//25
 					_delay_ms(50);
 					moveOnDirection(270, NORMAL_SPEED, NULL);
 					_delay_ms(50);
 					moveOnDirection(125, 30, NULL);
-					rotateFor(-10, LOW_SPEED, NULL);
-					moveOnDirection(35, 30, NULL);
+					rotateFor(-5, LOW_SPEED, NULL);
+					moveOnDirection(40, 30, NULL);
 					liftMove(DOWN, RIGHT_SIDE);
 					_delay_ms(500);
 					leftDiafram(ACTIVATE);
@@ -446,7 +448,7 @@ void greenSide(void)
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
-					_delay_ms(500);
+					_delay_ms(800); //Povecan delay da bi imao vremena da podigne do kraja
 					moveOnDirection(70, LOW_SPEED, NULL);
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
@@ -460,7 +462,7 @@ void greenSide(void)
 				{
 					liftMove(UP, LEFT_SIDE);
 					rotateFor(15,LOW_SPEED, NULL);
-					moveOnDirection(160, LOW_SPEED, NULL);
+					moveOnDirection(170, LOW_SPEED, NULL);
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					leftDiafram(ACTIVATE);
