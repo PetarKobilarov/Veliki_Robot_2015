@@ -105,7 +105,7 @@ char gotoXY(position coordinates, unsigned char speed, signed char direction, ch
 			return ODOMETRY_FAIL;
 		
 		_delay_ms(50);
-		if(callback != NULL)
+		if(buffer[0] != 'R' && callback != NULL)
 		{
 			callbackReturnValue = callback(time);
 			if(callbackReturnValue == 1)
@@ -148,7 +148,7 @@ char setPosition(position coordinates)
 	}
 }
 
-char rotate(int angle,unsigned char speed, char (*callback)(unsigned long startTime))
+char rotateFor(int angle,unsigned char speed, char (*callback)(unsigned long startTime))
 {
 	unsigned char buffer[8], callbackReturnValue;
 	unsigned long time;

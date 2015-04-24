@@ -23,6 +23,7 @@ typedef struct gpio GPIOData;
 static volatile GPIOData *gpios[MAX_INPUTS];
 static volatile unsigned char inputsNumber = 0;
 static volatile unsigned long systemTime;
+static volatile unsigned char matchStarted = 0;
 
 unsigned char GPIO_PinRegister(volatile unsigned char *baseAddress, unsigned char pin)
 {
@@ -85,29 +86,12 @@ void Timer_Init(unsigned int freq)
 	SREG |= 0x80;
 }
 
-void Timer_0_Init(void)
-{
-	TCCR0A |= (1 << WGM01) | (0 << WGM00) | (1 << COMA1) | (0 << COMA0) | (1 << CS02) | (0 << CS01) | (1 << CS00);//preskaler 1024
-	OCR0A = 878906;
-	TIMSK0 = 1 << OCIE0A;
-	
-	TCNT0 = 0;
-}
-
-ISR(TIMER0_COMP_vect)
-{
-	if (TCNT0 >= OCR0A)
-	{
-		PORTG = 0xFF;
-	}
-		
-}
 
 ISR(TIMER1_COMPA_vect)
 {
 	fillDebaunsingData();
     #if USE_TIMER_HOOK == 1
-    Timer_Hook();
+    TimerHook();
     #endif // USE_TIMER_HOOK
 	systemTime++;
 }
@@ -141,7 +125,9 @@ ISR(TIMER1_COMPA_vect)
 }*/
 
 void systemInit(void)
-{
+{	
+	_delay_ms(1000);
+	servo_init(50);
 	DDRG = 0xFF;
 
 	/*_delay_ms(700);
@@ -156,6 +142,8 @@ void systemInit(void)
 	
 	Timer_Init(1000);
 	CAN_Init(4);
+	theDoors(RIGHT_SIDE, DEACTIVATE);
+	theDoors(LEFT_SIDE, DEACTIVATE);
 	
 	//logger("Initializing digital inputs...\n\r");
 	forwardUpperLeftSensor = GPIO_PinRegister(GPIOA_BASE, 4);//prednji gornji levi senzor za detekciju protivnika		//radi
@@ -169,17 +157,15 @@ void systemInit(void)
 	backwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 3);//zadnji senzor za detekciju protivnika						//radi
 	backwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 0);//zadnji srednji senzor za detekciju protivnika				//radi
 	jumper = GPIO_PinRegister(GPIOF_BASE, 2);//jumper koji sluzi za startovanje robota									//radi
-	sidesSwitch = GPIO_PinRegister(GPIOF_BASE, 4);//prekidac za menjanje strana											//ne radi
+	sidesSwitch = GPIO_PinRegister(GPIOB_BASE, 7);//prekidac za menjanje strana											//ne radi
 	
+	colectThePopcorn(LEFT_SIDE, CLOSE);
+	colectThePopcorn(RIGHT_SIDE, CLOSE);
 	
 	//logger("Init done. Waiting for start jumper...\n\r");
 	while(jumperCheck() == 1);
 	systemTime = 0;
-	
-	Timer_0_Init();
-	
-	servo_init(100);
-	
+	matchStarted = 1;
 	clapperboardsClapped = 0;
 	popcornColected = 0;
 	standColected = 0;
@@ -354,4 +340,9 @@ signed char sidesSwitchCheck(void)
 	}
 	
 	return 0;
+}
+
+unsigned char matchIsStarted(void)
+{
+	return matchStarted;
 }

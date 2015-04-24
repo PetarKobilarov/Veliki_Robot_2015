@@ -1,9 +1,10 @@
-#define TACTIC_ONE_POSITION_COUNT	11
+#define TACTIC_ONE_POSITION_COUNT	13
 
 typedef enum
 {
 	TACTIC_ONE = 1,
-	TACTIC_TWO
+	TACTIC_TWO,
+	COLLISION
 }robotStates;
 
 typedef struct
@@ -13,8 +14,6 @@ typedef struct
 	signed char direction;
 	char (*detectionCallback)(unsigned long startTime);
 }gotoFields;
-
-unsigned char currentPosition, nextPosition;
 
 void yellowSide(void);
 void greenSide(void);

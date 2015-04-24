@@ -2,7 +2,7 @@
 #define SYSTEM_H_
 
 #define MAX_INPUTS	    20
-#define USE_TIMER_HOOK  0
+#define USE_TIMER_HOOK  1
 
 #define GPIOA_BASE 0x22
 #define GPIOB_BASE 0x25
@@ -18,7 +18,6 @@ unsigned char GPIO_ReadFromRegister(unsigned char pinHandler);
 void fillDebaunsingData(void);
 
 void Timer_Init(unsigned int freq);
-void Timer_0_Init(void);
 //void SPI_Init(void);
 //unsigned char SPI_ReadWrite(unsigned char data);
 
@@ -37,6 +36,7 @@ signed char checkLiftSensor(signed char sensor);
 signed char checkFrontSensors(signed char sensor);
 signed char checkRearSensors(signed char sensor);
 signed char checkForStands(signed char sensor); 
+unsigned char matchIsStarted(void);
 
 
 //void logger(const char *text, ...);

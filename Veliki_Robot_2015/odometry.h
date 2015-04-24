@@ -41,7 +41,7 @@ char stop(char type);
 char moveOnDirection(int distance, unsigned char speed, char (*callback)(unsigned long startTime));
 char gotoXY(position coordinates, unsigned char speed, signed char direction, char (*callback)(unsigned long startTime));
 char setPosition(position coordinates);
-char rotate(int angle,unsigned char speed, char (*callback)(unsigned long startTime));
+char rotateFor(int angle,unsigned char speed, char (*callback)(unsigned long startTime));
 char setAngle(int angle, unsigned char speed, char (*callback)(unsigned long startTime));
 char getState(void);
 position getPosition(void);

@@ -168,12 +168,12 @@ void yellowSide(void)
 					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
 					
-					rotate(-90, LOW_SPEED,popcornColectionYellowSide);	
+					rotateFor(-90, LOW_SPEED,popcornColectionYellowSide);	
 					moveOnDirection(80, LOW_SPEED, NULL);
 					colectThePopcorn(RIGHT_SIDE, DEACTIVATE);
-					rotate(100, LOW_SPEED, NULL);
+					rotateFor(100, LOW_SPEED, NULL);
 					moveOnDirection(-80, LOW_SPEED, NULL);
-					rotate(-15, LOW_SPEED, NULL);
+					rotateFor(-15, LOW_SPEED, NULL);
 					moveOnDirection(300, NORMAL_SPEED, NULL);
 					moveOnDirection(110, 30, NULL);
 					_delay_ms(50);
@@ -183,9 +183,9 @@ void yellowSide(void)
 					rightDiafram(ACTIVATE);
 					_delay_ms(50);
 					moveOnDirection(-30, LOW_SPEED, NULL);
-					rotate(30, LOW_SPEED, NULL);
+					rotateFor(30, LOW_SPEED, NULL);
 					knockDownTheClapperboards(LEFT_SIDE, ACTIVATE);
-					rotate(-30, LOW_SPEED, NULL);
+					rotateFor(-30, LOW_SPEED, NULL);
 					
 				}else if(currentPosition == 5)
 				{
@@ -201,7 +201,7 @@ void yellowSide(void)
 					_delay_ms(5000);
 					moveOnDirection(-200, LOW_SPEED, NULL);
 					liftMove(UP, RIGHT_SIDE);
-					rotate(-90, LOW_SPEED, releaseCup);
+					rotateFor(-90, LOW_SPEED, releaseCup);
 					_delay_ms(50);
 					
 					moveOnDirection(100, LOW_SPEED, NULL);
@@ -213,7 +213,7 @@ void yellowSide(void)
 					
 					liftMove(UP, RIGHT_SIDE);
 					
-					rotate(180,NORMAL_SPEED, NULL);
+					rotateFor(180,NORMAL_SPEED, NULL);
 					
 			}else if(currentPosition == 8)
 			{  
@@ -231,7 +231,7 @@ void yellowSide(void)
 		}else if(currentPosition == 9)
 		{
 			liftMove(UP, RIGHT_SIDE);
-			rotate(-15,LOW_SPEED, NULL);
+			rotateFor(-15,LOW_SPEED, NULL);
 			moveOnDirection(170, LOW_SPEED, NULL);
 			liftMove(DOWN, RIGHT_SIDE);
 			_delay_ms(500);
@@ -239,7 +239,7 @@ void yellowSide(void)
 			
 		}else if(currentPosition == 10)
 		{
-			rotate(-100, LOW_SPEED, NULL);
+			rotateFor(-100, LOW_SPEED, NULL);
 			moveOnDirection(380, LOW_SPEED, NULL);
 			rightDiafram(DEACTIVATE);
 			_delay_ms(5000);

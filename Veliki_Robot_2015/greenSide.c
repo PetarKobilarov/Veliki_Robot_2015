@@ -9,76 +9,41 @@
 #include "actuators.h"
 #include "fat.h"
 
-position compare;
+position positinDetected, compare;
 
-char sensorDetectionCollbackPosition0(unsigned long startTime) {
-	if(checkFrontSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
-		return 1;
+char defaultFrontDetectionCallback(unsigned long startTime)
+{
+	if(checkFrontSensors(ALL) == DETECTED)
+	{
+		PORTG = 0xff;
+		stop(HARD_STOP);
+		return 1;	
 	}
+	PORTG = 0;
 	return 0;
 }
 
-char sensorDetectionCollbackPosition1(unsigned long startTime) {
-	if(checkFrontSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
+char defaultRearDetectionCallback(unsigned long StartTime)
+{
+	if(checkRearSensors(ALL) == DETECTED)
+	{
+		PORTG = 0xff;
+		stop(HARD_STOP);
 		return 1;
 	}
+	PORTG = 0;
 	return 0;
 }
 
-char sensorDetectionCollbackPosition2(unsigned long startTime) {
-	if(checkFrontSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
+char detectionCallbackFrontMiddle(unsigned long StartTime)
+{
+	if(checkFrontSensors(MIDDLE) == DETECTED)
+	{
+		PORTG = 0xff;
+		stop(HARD_STOP);
 		return 1;
 	}
-	return 0;
-}
-
-char sensorDetectionCollbackPosition3(unsigned long startTime) {
-	if(checkFrontSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
-		return 1;
-	}
-	return 0;
-}
-
-char sensorDetectionCollbackPosition4(unsigned long startTime) {
-	if((checkFrontSensors(RIGHT_SIDE) == DETECTED) || (checkFrontSensors(MIDDLE) == DETECTED)) {
-		stop(SOFT_STOP);
-		return 1;
-	}
-	return 0;
-}
-	
-char sensorDetectionCollbackPosition6(unsigned long startTime) {
-	if(checkFrontSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
-	}
-	return 0;
-}
-
-char sensorDetectionCollbackPosition7(unsigned long startTime) {
-	if(checkRearSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
-		return 1;
-	}
-	return 0;
-}
-
-char sensorDetectionCollbackPosition8(unsigned long startTime) {
-	if(checkFrontSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
-		return 1;
-	}
-	return 0;
-}
-
-char sensorDetectionCollbackPosition10(unsigned long startTime) {
-	if(checkFrontSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
-		return 1;
-	}
+	PORTG = 0;
 	return 0;
 }
 
@@ -100,9 +65,8 @@ char correctLeftStand(unsigned long startTime)
 char releaseLeftStand(unsigned long startTime)
 {
 	if(checkFrontSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
-		currentPosition -= 1;
-		_delay_ms(5000);
+		stop(HARD_STOP);
+	
 	}
 	
 	standColected = 0;
@@ -123,15 +87,14 @@ char releaseCupGreen(unsigned long startTime)
 
 char clapperboardsKnockDownGreenSide(unsigned long startTime)
 {
-	if(checkRearSensors(ALL) == DETECTED) {
-		stop(SOFT_STOP);
-		currentPosition -= 1;
-		_delay_ms(5000);
+	if(checkRearSensors(MIDDLE) == DETECTED) 
+	{
+		stop(HARD_STOP);
 	}
 	
 	if(clapperboardsClapped == 0)
 	{
-		_delay_ms(700);
+		_delay_ms(350);
 		knockDownTheClapperboards(RIGHT_SIDE, DEACTIVATE);
 		_delay_ms(1200);
 		knockDownTheClapperboards(RIGHT_SIDE, ACTIVATE);
@@ -175,17 +138,19 @@ char popcornColectionGreenSide(unsigned long startTime)
 *************************************************************************************************************************************************************************************/
 const gotoFields greenSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 {
-	{{550, 1067, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition0},							//izlazi iz startnog polja			0
-	{{780, 550, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition1},							//ide na poziciju prvog valjka		1
-	{{1250, 590, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition2},							//ide do drugog valjka				2
-	{{960, 290, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition3},							//ide do treceg valjka				3
-	{{420, 290, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition4},							//ide do prve case koju kupi		4
-	{{950, 280, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownGreenSide},								//rusi prve dve nase klapne			5
-	{{500, 1020, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition6},							//ide da ostavi kulu				6
-	{{400, 1020, 0}, NORMAL_SPEED, FORWARD, sensorDetectionCollbackPosition7},							//ostavlja kulu i casu				7
-	{{660, 1730, 0}, LOW_SPEED, FORWARD, sensorDetectionCollbackPosition8},								//hvata 2 valjka kod podijuma		8
-	{{240, 1690, 0}, NORMAL_SPEED, FORWARD, releaseLeftStand},											//hvata poslednji valjak			9
-	{{600, 1500, 0}, NORMAL_SPEED, BACKWARD, sensorDetectionCollbackPosition10}							//ostavlja drugu kulu  				10
+	{{550, 1067, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//izlazi iz startnog polja			0
+	{{780, 550, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide na poziciju prvog valjka		1
+	{{1250, 590, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide do drugog valjka				2
+	{{960, 320, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide do treceg valjka				3
+	{{420, 290, 0}, NORMAL_SPEED, FORWARD, detectionCallbackFrontMiddle},							//ide do prve case koju kupi		4
+	{{950, 280, 0}, LOW_SPEED, BACKWARD, clapperboardsKnockDownGreenSide},							//rusi prve dve nase klapne			5
+	{{500, 1020, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide da ostavi kulu				6
+	{{400, 1020, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ostavlja kulu i casu				7
+	{{660, 1730, 0}, LOW_SPEED, FORWARD, defaultFrontDetectionCallback},							//hvata 2 valjka kod podijuma		8
+	{{240, 1690, 0}, NORMAL_SPEED, FORWARD, releaseLeftStand},										//hvata poslednji valjak			9
+	{{600, 1500, 0}, NORMAL_SPEED, BACKWARD, defaultRearDetectionCallback},							//ostavlja drugu kulu  				10
+	{{1550, 350, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback},							//ide do zajednickog prostora		11
+	{{1950, 350, 0}, NORMAL_SPEED, FORWARD, defaultFrontDetectionCallback}							//nosi protivnicku kulu				12
 };
 
 /*************************************************************************************************************************************************************************************
@@ -205,7 +170,165 @@ void greenSide(void)
 	while (1)
 	{
 		switch(activeState)
-		{
+		{			
+			case COLLISION: 
+				if(currentPosition == 0)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 1)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+						break;
+				}
+				
+				if(currentPosition == 2)
+				{
+					_delay_ms(200);
+					positinDetected = getPosition();
+					if((positinDetected.x >= 1150) || (checkForStands(RIGHT_SIDE) == DETECTED))
+					{
+						stop(HARD_STOP);
+					}else
+					{
+						_delay_ms(1000);
+					}
+					liftMove(DOWN, RIGHT_SIDE);
+					_delay_ms(500);
+					rightDiafram(ACTIVATE);
+					_delay_ms(500);
+					liftMove(UP, RIGHT_SIDE);
+					_delay_ms(500);
+					positinDetected = getPosition();
+					positinDetected.x -= 200;
+					gotoXY(positinDetected, NORMAL_SPEED, BACKWARD, NULL);
+					nextPosition = ++currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 3)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 4)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 5)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 6)
+				{
+					_delay_ms(200);
+					stop(HARD_STOP);
+					_delay_ms(100);
+					positinDetected.x = 1490;
+					positinDetected.y = 1020;
+					gotoXY(positinDetected, NORMAL_SPEED, FORWARD, NULL);
+					_delay_ms(200);
+					nextPosition = ++currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 7)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 8)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 9)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 10)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 11)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+						_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				if(currentPosition == 12)
+				{
+					_delay_ms(200);
+					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
+					_delay_ms(100);
+					nextPosition = currentPosition;
+					activeState = TACTIC_ONE;
+					break;
+				}
+				
+				
+			case STUCK:
+				_delay_ms(1000);
+				activeState = TACTIC_ONE;
+				nextPosition = currentPosition;
+					
+				break;
+				
 			case TACTIC_ONE:
 			for (currentPosition = nextPosition; currentPosition < TACTIC_ONE_POSITION_COUNT; currentPosition++)
 			{
@@ -215,7 +338,8 @@ void greenSide(void)
 				
 				if(odometryStatus == ODOMETRY_FAIL)
 				{
-
+					activeState = COLLISION;
+					break;
 				}
 				else if(odometryStatus == ODOMETRY_STUCK)
 				{
@@ -254,24 +378,24 @@ void greenSide(void)
 					liftMove(UP, RIGHT_SIDE);
 					
 					//kupi prvu casu
-					rotate(90, LOW_SPEED, popcornColectionGreenSide);
+					rotateFor(90, LOW_SPEED, popcornColectionGreenSide);
 					moveOnDirection(60, LOW_SPEED, NULL);
 					colectThePopcorn(LEFT_SIDE, DEACTIVATE);
 					moveOnDirection(-100, LOW_SPEED, NULL);
-					rotate(-100, LOW_SPEED, NULL);
+					rotateFor(-100, LOW_SPEED, NULL);
 					_delay_ms(500);
 					compare = getPosition();
 					compare.x += 80;
 					compare.y -= 25;
 					gotoXY(compare, LOW_SPEED, BACKWARD, NULL);
 					_delay_ms(50);
-					rotate(25, LOW_SPEED, NULL);
+					rotateFor(25, LOW_SPEED, NULL);
 					_delay_ms(50);
 					moveOnDirection(270, NORMAL_SPEED, NULL);
 					_delay_ms(50);
 					moveOnDirection(125, 30, NULL);
-					rotate(-10, LOW_SPEED, NULL);
-					moveOnDirection(40, 30, NULL);
+					rotateFor(-10, LOW_SPEED, NULL);
+					moveOnDirection(35, 30, NULL);
 					liftMove(DOWN, RIGHT_SIDE);
 					_delay_ms(500);
 					leftDiafram(ACTIVATE);
@@ -279,12 +403,12 @@ void greenSide(void)
 
 					//okrece se da otvori udaraljku
 					_delay_ms(50);
-					rotate(10, LOW_SPEED, NULL);
+					rotateFor(10, LOW_SPEED, NULL);
 					_delay_ms(50);
 					moveOnDirection(-50, LOW_SPEED, NULL);
-					rotate(-35, LOW_SPEED, NULL);
+					rotateFor(-35, LOW_SPEED, NULL);
 					knockDownTheClapperboards(RIGHT_SIDE, ACTIVATE);
-					rotate(35, LOW_SPEED, NULL);
+					rotateFor(35, LOW_SPEED, NULL);
 					
 					
 					
@@ -296,11 +420,15 @@ void greenSide(void)
 					
 				}else if(currentPosition == 7)
 				{
+					theDoors(RIGHT_SIDE, ACTIVATE);
 					rightDiafram(DEACTIVATE); //ostavlja toranj
-					_delay_ms(5000);
-					moveOnDirection(-220, NORMAL_SPEED, NULL);
+					_delay_ms(300);
+					compare = getPosition();
+					compare.x += 220;
+					gotoXY(compare, NORMAL_SPEED, BACKWARD, NULL);
+					theDoors(RIGHT_SIDE, DEACTIVATE);
 					liftMove(UP, LEFT_SIDE);
-					rotate(90, LOW_SPEED, releaseCupGreen);
+					rotateFor(90, LOW_SPEED, releaseCupGreen);
 					_delay_ms(50);
 					
 					moveOnDirection(100, LOW_SPEED, NULL);
@@ -308,41 +436,55 @@ void greenSide(void)
 					colectThePopcorn(LEFT_SIDE, ACTIVATE); //Ostavlja casu
 					_delay_ms(100);
 					moveOnDirection(-230, NORMAL_SPEED, NULL);
+					_delay_ms(100);
 					colectThePopcorn(LEFT_SIDE,CLOSE);//ne zatvori lepo
 					
 					liftMove(UP, LEFT_SIDE);
 					
-					rotate(-180,NORMAL_SPEED, NULL);
 				}else if(currentPosition == 8) //kupi 2 valjka gore desno 
 				{
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					liftMove(UP, LEFT_SIDE);
 					_delay_ms(500);
-					moveOnDirection(90, LOW_SPEED, NULL);
+					moveOnDirection(70, LOW_SPEED, NULL);
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					leftDiafram(ACTIVATE);
 					_delay_ms(500);
-					moveOnDirection(-310, NORMAL_SPEED, NULL);	
+					compare = getPosition();
+					compare.y -= 310;
+					gotoXY(compare, NORMAL_SPEED, BACKWARD, NULL);
+					//moveOnDirection(-310, NORMAL_SPEED, NULL);	
 				}else if(currentPosition == 9) //hvata poslednji valjak
 				{
 					liftMove(UP, LEFT_SIDE);
-					rotate(15,LOW_SPEED, NULL);
-					moveOnDirection(170, LOW_SPEED, NULL);
+					rotateFor(15,LOW_SPEED, NULL);
+					moveOnDirection(160, LOW_SPEED, NULL);
 					liftMove(DOWN, LEFT_SIDE);
 					_delay_ms(500);
 					leftDiafram(ACTIVATE);
+					_delay_ms(200);
 				}else if(currentPosition == 10)
 				{
-					rotate(100, LOW_SPEED, NULL);
+					rotateFor(100, LOW_SPEED, NULL);
 					moveOnDirection(380, LOW_SPEED, NULL);
 					leftDiafram(DEACTIVATE);
-					_delay_ms(5000);
+					theDoors(LEFT_SIDE, ACTIVATE);
 					moveOnDirection(-300, LOW_SPEED, NULL);
+					theDoors(LEFT_SIDE, DEACTIVATE);
 					
+					
+				}else if(currentPosition == 11)
+				{
+					rotateFor(25, LOW_SPEED, NULL);
+					colectThePopcorn(LEFT_SIDE, ACTIVATE);
+					
+				}else if(currentPosition == 12)
+				{
 					while(1);
 				}
+				
 				}//end for
 				break;	
 			}//END OF switch
