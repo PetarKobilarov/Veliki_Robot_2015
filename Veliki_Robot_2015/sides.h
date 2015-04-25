@@ -1,4 +1,4 @@
-#define TACTIC_ONE_POSITION_COUNT	13
+#define TACTIC_ONE_POSITION_COUNT	11
 
 typedef enum
 {
@@ -16,6 +16,7 @@ typedef struct
 }gotoFields;
 
 unsigned char numOfStandsRight, numOfStandsLeft;
+position positinDetected, compare;
 
 void yellowSide(void);
 void greenSide(void);

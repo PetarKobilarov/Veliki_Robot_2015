@@ -9,9 +9,6 @@
 #include "actuators.h"
 #include "fat.h"
 
-position positinDetected, compare;
-
-
 
 char greenDetectionCallbackwithoutLeft(unsigned long startTime)
 {
@@ -119,7 +116,7 @@ char clapperboardsKnockDownGreenSide(unsigned long startTime)
 	
 	if(clapperboardsClapped == 0)
 	{
-		_delay_ms(350);
+		_delay_ms(150);
 		knockDownTheClapperboards(RIGHT_SIDE, DEACTIVATE);
 		_delay_ms(1200);
 		knockDownTheClapperboards(RIGHT_SIDE, ACTIVATE);
@@ -173,9 +170,7 @@ const gotoFields greenSideTacticOnePositions[TACTIC_ONE_POSITION_COUNT] =
 	{{400, 1020, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback},		//ostavlja kulu i casu			7
 	{{660, 1733, 0}, LOW_SPEED, FORWARD, greenDetectionCallbackWithoutRight},			//hvata 2 valjka kod podijuma	8
 	{{240, 1710, 0}, NORMAL_SPEED, FORWARD, releaseLeftStand},							//hvata poslednji valjak		9
-	{{600, 1500, 0}, NORMAL_SPEED, BACKWARD, greenDefaultRearDetectionCallback},		//ostavlja drugu kulu  			10
-	{{1550, 350, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback},		//ide do zajednickog prostora	11
-	{{1950, 350, 0}, NORMAL_SPEED, FORWARD, greenDefaultFrontDetectionCallback}			//nosi protivnicku kulu			12
+	{{600, 1500, 0}, NORMAL_SPEED, BACKWARD, greenDefaultRearDetectionCallback}			//ostavlja drugu kulu  			10
 };
 
 /*************************************************************************************************************************************************************************************
@@ -326,26 +321,6 @@ void greenSide(void)
 					break;
 				}
 				
-				if(currentPosition == 11)
-				{
-					_delay_ms(200);
-					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
-						_delay_ms(100);
-					nextPosition = currentPosition;
-					activeState = TACTIC_ONE;
-					break;
-				}
-				
-				if(currentPosition == 12)
-				{
-					_delay_ms(200);
-					while(greenSideTacticOnePositions[currentPosition].detectionCallback(0) != 0)
-					_delay_ms(100);
-					nextPosition = currentPosition;
-					activeState = TACTIC_ONE;
-					break;
-				}
-				
 				
 			case STUCK:
 				_delay_ms(1000);
@@ -450,9 +425,9 @@ void greenSide(void)
 					theDoors(RIGHT_SIDE, ACTIVATE);
 					rightDiafram(DEACTIVATE); //ostavlja toranj
 					_delay_ms(300);
-					compare = getPosition();
-					compare.x += 250;
-					gotoXY(compare, NORMAL_SPEED, BACKWARD, NULL);
+					moveOnDirection(-450, LOW_SPEED, NULL);
+					_delay_ms(200);
+					moveOnDirection(200, LOW_SPEED, NULL);
 					theDoors(RIGHT_SIDE, DEACTIVATE);
 					liftMove(UP, LEFT_SIDE);
 					rotateFor(90, LOW_SPEED, releaseCupGreen);
@@ -465,9 +440,6 @@ void greenSide(void)
 					moveOnDirection(-180, NORMAL_SPEED, NULL);
 					_delay_ms(100);
 					colectThePopcorn(LEFT_SIDE,CLOSE);//ne zatvori lepo
-					colectThePopcorn(LEFT_SIDE, ACTIVATE);
-					rotateFor(-540, LOW_SPEED, NULL);
-					colectThePopcorn(LEFT_SIDE, CLOSE);
 					
 					liftMove(UP, LEFT_SIDE);
 					
@@ -499,21 +471,11 @@ void greenSide(void)
 				{
 					rotateFor(100, LOW_SPEED, NULL);
 					moveOnDirection(380, LOW_SPEED, NULL);
-					leftDiafram(DEACTIVATE);
 					theDoors(LEFT_SIDE, ACTIVATE);
+					leftDiafram(DEACTIVATE);
 					moveOnDirection(-300, LOW_SPEED, NULL);
 					theDoors(LEFT_SIDE, DEACTIVATE);
-					while(1);
-					
-					
-				}else if(currentPosition == 11)
-				{
-					rotateFor(25, LOW_SPEED, NULL);
-					colectThePopcorn(LEFT_SIDE, ACTIVATE);
-					
-				}else if(currentPosition == 12)
-				{
-					while(1);
+					while(1);	
 				}
 				
 				}//end for
