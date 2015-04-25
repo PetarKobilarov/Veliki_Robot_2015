@@ -241,10 +241,10 @@ void theDoors(signed char side, signed char state)
 	{
 		if(state == ACTIVATE)
 		{
-			servo_position1(227);
+			servo_position1(215);
 		}else
 		{
-			servo_position1(240);
+			servo_position1(240);//236
 		}
 		
 	}else
