@@ -41,8 +41,10 @@ unsigned char GPIO_PinRegister(volatile unsigned char *baseAddress, unsigned cha
 	for(i = 0; i < 3; i++)
 		gpios[inputsNumber]->buffer[i] = 0;
 
-	_MMIO_BYTE(baseAddress - 1) &= (0 << pin);
-	_MMIO_BYTE(baseAddress) &= (0 << pin);
+	/*_MMIO_BYTE(baseAddress - 1) &= (0 << pin);
+	_MMIO_BYTE(baseAddress) &= (0 << pin);*/
+	_MMIO_BYTE(baseAddress - 1) &= ~(1 << pin);
+	_MMIO_BYTE(baseAddress) |= (1 << pin);
 
 	i = inputsNumber;
 	inputsNumber++;
@@ -147,15 +149,15 @@ void systemInit(void)
 	
 	//logger("Initializing digital inputs...\n\r");
 	forwardUpperLeftSensor = GPIO_PinRegister(GPIOA_BASE, 4);//prednji gornji levi senzor za detekciju protivnika		//radi
-	forwardUpperRightSensor = GPIO_PinRegister(GPIOA_BASE, 5); //prednji gornji desni senzor za detekciju protivnika	//radi
+	forwardUpperRightSensor = GPIO_PinRegister(GPIOA_BASE, 3); //prednji gornji desni senzor za detekciju protivnika	//radi5
 	forwardLowerLeftSensor = GPIO_PinRegister(GPIOA_BASE, 0);//prednji donji levi senzor za detekciju valjka			//radi
-	forwardLowerRightSensor = GPIO_PinRegister(GPIOA_BASE, 1);//prednji levi levi senzor za detekciju valjka			//radi
-	forwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 1);//prednji srednji senzor za detekciju protivnika				//radi
+	forwardLowerRightSensor = GPIO_PinRegister(GPIOA_BASE, 1);//prednji donji desni senzor za detekciju valjka			//radi
+	forwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 0);//prednji srednji senzor za detekciju protivnika				//radi//a3 prednji desni
 	upperLiftSensor = GPIO_PinRegister(GPIOA_BASE, 7);//gornji senzor za detekciju pozicije lifta						//radi
 	lowerLiftSensor = GPIO_PinRegister(GPIOA_BASE, 6);//donji senzor za detekciju pozicije lifta						//radi
 	backwardLeftSensor = GPIO_PinRegister(GPIOA_BASE, 2);//zadnji senzor za detekciju protivnika						//radi
-	backwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 3);//zadnji senzor za detekciju protivnika						//radi
-	backwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 0);//zadnji srednji senzor za detekciju protivnika				//radi
+	backwardRightSensor = GPIO_PinRegister(GPIOA_BASE, 5);//zadnji senzor za detekciju protivnika						//radi
+	backwardMiddleSensor = GPIO_PinRegister(GPIOF_BASE, 1);//zadnji srednji senzor za detekciju protivnika				//radi
 	jumper = GPIO_PinRegister(GPIOF_BASE, 2);//jumper koji sluzi za startovanje robota									//radi
 	sidesSwitch = GPIO_PinRegister(GPIOB_BASE, 7);//prekidac za menjanje strana											//ne radi
 	

@@ -15,5 +15,7 @@ typedef struct
 	char (*detectionCallback)(unsigned long startTime);
 }gotoFields;
 
+unsigned char numOfStandsRight, numOfStandsLeft;
+
 void yellowSide(void);
 void greenSide(void);

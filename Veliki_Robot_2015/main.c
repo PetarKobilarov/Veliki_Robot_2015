@@ -23,14 +23,20 @@ void TimerHook(void)
 
 int main(void)
 {
-	systemInit();
 	
+	systemInit();
 	//servo_position1(238); // servo1: 225-otvoren, 238-zatvoren
-	//servo_position2(215); // servo2: 235-otvoren, 215-zatvoren
+	//servo_position2(235); // servo2: 235-otvoren, 215-zatvoren
 	while(1)
 		{	
-			greenSide();
-
+			if(sidesSwitchCheck() == 0)
+			{
+				greenSide();
+			}else
+			{
+				yellowSide();
+			}
+			
 		}//END OF while(1)
 			
 }
